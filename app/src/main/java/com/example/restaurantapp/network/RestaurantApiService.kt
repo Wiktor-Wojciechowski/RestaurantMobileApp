@@ -26,14 +26,18 @@ data class LoginParams(
 
 interface RestaurantApiService {
     @Headers("Content-Type:application/json")
-    @POST
-    fun register_user(@Body body: RegisterParams )
+    @POST("register-user")
+    suspend fun registerUser(@Body body: RegisterParams ): String
 
 
 
     @Headers("Content-Type:application/json")
-    @POST
-    fun login_user(@Body body: LoginParams){
+    @POST("login-user")
+    suspend fun login_user(@Body body: LoginParams)
+}
 
+object RestaurantApi {
+    val retrofitService: RestaurantApiService by lazy {
+        retrofit.create(RestaurantApiService::class.java)
     }
 }

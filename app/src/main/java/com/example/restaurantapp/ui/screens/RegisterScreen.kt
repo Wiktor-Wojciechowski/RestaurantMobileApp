@@ -1,5 +1,7 @@
 package com.example.restaurantapp.ui.screens
 
+import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,19 +20,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.restaurantapp.R
+import com.example.restaurantapp.network.RegisterParams
+import com.example.restaurantapp.network.RestaurantApi
+
 
 @Composable
 fun RegisterScreen (
-    onGoToLogin: () -> Unit = {}
+    onGoToLogin: () -> Unit = {},
+    onRegister: (RegisterParams) -> Unit = {}
 ){
     var username by remember { mutableStateOf("")}
     var email by remember { mutableStateOf("")}
     var password by remember { mutableStateOf("")}
     var age by remember { mutableStateOf("")}
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ){
+        Text(
+            text = stringResource(R.string.register),
+            fontSize = 30.sp
+        )
+        Spacer(modifier = Modifier.size(8.dp))
         OutlinedTextField(
             value = username,
             onValueChange = {username = it},
@@ -48,16 +62,22 @@ fun RegisterScreen (
             onValueChange = {age = it},
             label = { Text(text = stringResource(R.string.age))})
         Spacer(modifier = Modifier.size(8.dp))
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = {
+            var params = RegisterParams(username, email, password, age)
+            Log.d("params:", params.toString())
+            Log.d("RegScreen", "called")
+            onRegister(params)
+        }) {
             Text(text = stringResource(R.string.register))
         }
         Button(onClick = {onGoToLogin()}){
             Text(
-                text = "Go to Login"
+                text = stringResource(R.string.goToLogin)
             )
         }
     }
 }
+
 @Preview
 @Composable
 fun RegisterPreview(){

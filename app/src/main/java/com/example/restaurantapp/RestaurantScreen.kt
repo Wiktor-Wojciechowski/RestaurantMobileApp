@@ -4,12 +4,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.restaurantapp.network.RegisterParams
 import com.example.restaurantapp.ui.screens.LogInScreen
 import com.example.restaurantapp.ui.screens.RegisterScreen
+import com.example.restaurantapp.ui.screens.RegisterViewModel
 
 enum class RestaurantScreen {
     Login,
@@ -20,6 +23,7 @@ enum class RestaurantScreen {
 fun RestaurantApp(
     navController: NavHostController = rememberNavController()
 ){
+    val viewModel: RegisterViewModel = viewModel()
     Surface {
         NavHost(
             navController = navController,
@@ -37,6 +41,9 @@ fun RestaurantApp(
                 RegisterScreen(
                     onGoToLogin = {
                         navController.navigate(RestaurantScreen.Login.name)
+                    },
+                    onRegister = {
+                        params:RegisterParams -> viewModel.register(params)
                     }
                 )
             }
