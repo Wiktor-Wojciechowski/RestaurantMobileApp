@@ -1,17 +1,13 @@
 package com.example.restaurantapp.network
 
+import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
-
-private const val BASE_URL = "https://restaurantapi20240224142603.azurewebsites.net/"
-
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(ScalarsConverterFactory.create())
-    .baseUrl(BASE_URL)
-    .build()
 
 data class RegisterParams(
     val username: String,
@@ -26,18 +22,13 @@ data class LoginParams(
 
 interface RestaurantApiService {
     @Headers("Content-Type:application/json")
-    @POST("register-user")
-    suspend fun registerUser(@Body body: RegisterParams ): String
+    @POST("post")
+    //make this work with suspend modifier
+    fun registerUser(@Body body: RegisterParams ): Call<ResponseBody>
 
 
 
     @Headers("Content-Type:application/json")
     @POST("login-user")
-    suspend fun login_user(@Body body: LoginParams)
-}
-
-object RestaurantApi {
-    val retrofitService: RestaurantApiService by lazy {
-        retrofit.create(RestaurantApiService::class.java)
-    }
+    suspend fun loginUser(@Body body: LoginParams): Call<ResponseBody>
 }

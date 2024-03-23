@@ -9,21 +9,44 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.restaurantapp.data.RestaurantRepository
 import com.example.restaurantapp.network.RegisterParams
+import com.example.restaurantapp.network.RestaurantApiService
 import com.example.restaurantapp.ui.screens.LogInScreen
 import com.example.restaurantapp.ui.screens.RegisterScreen
 import com.example.restaurantapp.ui.screens.RegisterViewModel
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 enum class RestaurantScreen {
     Login,
     Register
 }
 
+private const val BASE_URL = "https://httpbin.org/"
+
+fun createRetrofit(): Retrofit{
+    return Retrofit
+        .Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl(BASE_URL)
+        .build()
+}
+fun createApiService(
+    retrofit: Retrofit
+): RestaurantApiService{
+    return retrofit
+        .create(RestaurantApiService::class.java)
+}
+
 @Composable
 fun RestaurantApp(
     navController: NavHostController = rememberNavController()
 ){
-    val viewModel: RegisterViewModel = viewModel()
+    val retrofit = createRetrofit()
+    val apiService = createApiService(retrofit)
+
+
     Surface {
         NavHost(
             navController = navController,
@@ -43,7 +66,12 @@ fun RestaurantApp(
                         navController.navigate(RestaurantScreen.Login.name)
                     },
                     onRegister = {
-                        params:RegisterParams -> viewModel.register(params)
+
+                        fun lam (params:RegisterParams) {
+                            val viewModel = RegisterViewModel(RestaurantRepository(apiService))
+                            viewModel.registerUser(params)
+                        }
+
                     }
                 )
             }

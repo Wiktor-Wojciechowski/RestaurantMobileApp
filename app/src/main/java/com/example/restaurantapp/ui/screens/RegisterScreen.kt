@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.restaurantapp.R
 import com.example.restaurantapp.network.RegisterParams
-import com.example.restaurantapp.network.RestaurantApi
+
 
 
 @Composable
