@@ -10,9 +10,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.restaurantapp.data.RestaurantRepository
+import com.example.restaurantapp.network.LoginParams
 import com.example.restaurantapp.network.RegisterParams
 import com.example.restaurantapp.network.RestaurantApiService
+import com.example.restaurantapp.ui.screens.HomeScreen
 import com.example.restaurantapp.ui.screens.LogInScreen
+import com.example.restaurantapp.ui.screens.LoginViewModel
 import com.example.restaurantapp.ui.screens.RegisterScreen
 import com.example.restaurantapp.ui.screens.RegisterViewModel
 import retrofit2.Retrofit
@@ -20,7 +23,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 enum class RestaurantScreen {
     Login,
-    Register
+    Register,
+    Home
 }
 
 private const val BASE_URL = "https://httpbin.org/"
@@ -56,6 +60,14 @@ fun RestaurantApp(
                 LogInScreen(
                     onGoToRegister = {
                         navController.navigate(RestaurantScreen.Register.name)
+                    },
+                    onGoToHome = {
+                        navController.navigate((RestaurantScreen.Home.name))
+                    },
+                    onLogin = {
+                        params: LoginParams ->
+                            val viewModel = LoginViewModel(RestaurantRepository(apiService), navController)
+                            viewModel.loginUser(params)
                     }
                 )
             }
@@ -66,14 +78,15 @@ fun RestaurantApp(
                         navController.navigate(RestaurantScreen.Login.name)
                     },
                     onRegister = {
-
-                        fun lam (params:RegisterParams) {
-                            val viewModel = RegisterViewModel(RestaurantRepository(apiService))
+                        params:RegisterParams ->
+                            val viewModel = RegisterViewModel(RestaurantRepository(apiService), navController)
                             viewModel.registerUser(params)
-                        }
-
                     }
                 )
+            }
+
+            composable(route = RestaurantScreen.Home.name){
+                HomeScreen()
             }
         }
     }

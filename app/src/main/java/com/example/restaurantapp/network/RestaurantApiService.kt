@@ -26,9 +26,7 @@ interface RestaurantApiService {
     //make this work with suspend modifier
     fun registerUser(@Body body: RegisterParams ): Call<ResponseBody>
 
-
-
     @Headers("Content-Type:application/json")
-    @POST("login-user")
-    suspend fun loginUser(@Body body: LoginParams): Call<ResponseBody>
+    @POST("post")
+    fun loginUser(@Body body: LoginParams): Call<ResponseBody>
 }

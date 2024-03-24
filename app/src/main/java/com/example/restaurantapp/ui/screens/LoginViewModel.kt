@@ -6,37 +6,34 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.restaurantapp.RestaurantScreen
 import com.example.restaurantapp.data.RestaurantRepository
-import com.example.restaurantapp.network.RegisterParams
+import com.example.restaurantapp.network.LoginParams
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RegisterViewModel(val repository: RestaurantRepository, val navController: NavController):ViewModel() {
-    fun registerUser(params: RegisterParams){
+class LoginViewModel(val repository: RestaurantRepository, val navController: NavController): ViewModel() {
+    fun loginUser(params: LoginParams){
         viewModelScope.launch {
-            try{
-                var call = repository.registerUser(params)
-                call.enqueue(object: Callback<ResponseBody> {
+            try {
+                var call = repository.loginUser(params)
+                call.enqueue(object: Callback<ResponseBody>{
                     override fun onResponse(
                         call: Call<ResponseBody>,
                         response: Response<ResponseBody>
                     ) {
                         val data = response.body()?.string()
-                        Log.d("RegisterResponse", data ?: "null")
-                        navController.navigate(RestaurantScreen.Login.name)
+                        Log.d("LoginResponse", data ?: "null")
+                        navController.navigate(RestaurantScreen.Home.name)
                     }
 
-                    override fun onFailure(
-                        call: Call<ResponseBody>,
-                        t: Throwable
-                    ) {
-                        Log.d("GetResponseT", t.message ?: "null throwable")
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        Log.d("LoginResponseT", t.message ?: "null throwable")
                     }
                 })
             } catch(e:Exception){
-                Log.d("RegisterError", e.message.toString())
+                Log.d("LoginError", e.message.toString())
             }
         }
     }

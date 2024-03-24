@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.restaurantapp.R
+import com.example.restaurantapp.network.LoginParams
 import com.example.restaurantapp.ui.theme.RestaurantAppTheme
 
 fun login(username:String, password:String){
@@ -29,6 +30,8 @@ fun login(username:String, password:String){
 @Composable
 fun LogInScreen(
     onGoToRegister: () -> Unit = {},
+    onLogin: (params: LoginParams) -> Unit = {},
+    onGoToHome: () -> Unit = {},
     modifier: Modifier = Modifier
 
 ) {
@@ -54,7 +57,10 @@ fun LogInScreen(
             label = { Text(stringResource(R.string.password)) }
         )
         Spacer(modifier = Modifier.size(8.dp))
-        Button(onClick = {}) {
+        Button(onClick = {
+            var params = LoginParams(username, password)
+            onLogin(params)
+        }) {
             Text(
                 text = stringResource(R.string.login)
             )
