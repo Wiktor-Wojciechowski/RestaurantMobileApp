@@ -18,6 +18,8 @@ import com.example.restaurantapp.ui.screens.LogInScreen
 import com.example.restaurantapp.ui.screens.LoginViewModel
 import com.example.restaurantapp.ui.screens.RegisterScreen
 import com.example.restaurantapp.ui.screens.RegisterViewModel
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -27,13 +29,23 @@ enum class RestaurantScreen {
     Home
 }
 
-private const val BASE_URL = "https://httpbin.org/"
+//private const val BASE_URL = "https://httpbin.org/"
+private const val BASE_URL = "https://restaurantapi20240224142603.azurewebsites.net/"
+
+
+
 
 fun createRetrofit(): Retrofit{
+
+    var interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor();
+    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    var client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build();
+
     return Retrofit
         .Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(BASE_URL)
+        .client(client)
         .build()
 }
 fun createApiService(

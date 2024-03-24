@@ -23,9 +23,12 @@ class LoginViewModel(val repository: RestaurantRepository, val navController: Na
                         call: Call<ResponseBody>,
                         response: Response<ResponseBody>
                     ) {
-                        val data = response.body()?.string()
-                        Log.d("LoginResponse", data ?: "null")
-                        navController.navigate(RestaurantScreen.Home.name)
+                        if(response.isSuccessful) {
+                            Log.d("responseS", response.body()?.string() ?: "noresponse")
+                            navController.navigate(RestaurantScreen.Home.name)
+                        }else{
+                            Log.d("responseE", response.toString())
+                        }
                     }
 
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
