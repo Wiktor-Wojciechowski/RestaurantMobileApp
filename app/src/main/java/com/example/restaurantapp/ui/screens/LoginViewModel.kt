@@ -9,6 +9,7 @@ import com.example.restaurantapp.data.RestaurantRepository
 import com.example.restaurantapp.network.LoginParams
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,7 +25,10 @@ class LoginViewModel(val repository: RestaurantRepository, val navController: Na
                         response: Response<ResponseBody>
                     ) {
                         if(response.isSuccessful) {
-                            Log.d("responseS", response.body()?.string() ?: "noresponse")
+                            var jsonString = response.body()?.string()
+                            val json = JSONObject(jsonString)
+                            val token = json.get("token")
+                            Log.d("responseS", token.toString() ?: "noresponse")
                             navController.navigate(RestaurantScreen.Home.name)
                         }else{
                             Log.d("responseE", response.toString())

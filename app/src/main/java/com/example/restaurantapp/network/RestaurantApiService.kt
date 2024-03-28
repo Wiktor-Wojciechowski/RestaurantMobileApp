@@ -22,11 +22,11 @@ data class LoginParams(
 
 interface RestaurantApiService {
     @Headers("Content-Type:application/json")
-    @POST("post")
+    @POST("register-user")
     //make this work with suspend modifier
     fun registerUser(@Body body: RegisterParams ): Call<ResponseBody>
 
     @Headers("Content-Type:application/json")
-    @POST("login-worker")
+    @POST("login-user")
     fun loginUser(@Body body: LoginParams): Call<ResponseBody>
 }

@@ -23,9 +23,12 @@ class RegisterViewModel(val repository: RestaurantRepository, val navController:
                         call: Call<ResponseBody>,
                         response: Response<ResponseBody>
                     ) {
-                        val data = response.body()?.string()
-                        Log.d("RegisterResponse", data ?: "null")
-                        navController.navigate(RestaurantScreen.Login.name)
+                        if(response.isSuccessful) {
+                            Log.d("responseS", response.body()?.string() ?: "noresponse")
+                            navController.navigate(RestaurantScreen.Login.name)
+                        }else{
+                            Log.d("responseE", response.toString())
+                        }
                     }
 
                     override fun onFailure(
