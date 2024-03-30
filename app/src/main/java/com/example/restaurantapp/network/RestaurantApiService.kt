@@ -6,6 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -19,6 +20,13 @@ data class LoginParams(
     val username: String,
     val password: String
 )
+data class Dish(
+    val id: Int,
+    val name: String,
+    val description: String,
+    val price: Int,
+    val availability: Boolean
+)
 
 interface RestaurantApiService {
     @Headers("Content-Type:application/json")
@@ -29,4 +37,7 @@ interface RestaurantApiService {
     @Headers("Content-Type:application/json")
     @POST("login-user")
     fun loginUser(@Body body: LoginParams): Call<ResponseBody>
+
+    @GET("api/dish")
+    fun getDishes(): List<Dish>
 }

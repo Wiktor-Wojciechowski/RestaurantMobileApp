@@ -1,5 +1,6 @@
 package com.example.restaurantapp.data
 
+import com.example.restaurantapp.network.Dish
 import com.example.restaurantapp.network.LoginParams
 import com.example.restaurantapp.network.RegisterParams
 import com.example.restaurantapp.network.RestaurantApiService
@@ -14,5 +15,9 @@ class RestaurantRepository (private val restaurantApiService: RestaurantApiServi
 
     suspend fun loginUser(body: LoginParams): Call<ResponseBody>{
         return restaurantApiService.loginUser(body)
+    }
+
+    suspend fun getDishes(): List<Dish>{
+        return restaurantApiService.getDishes()
     }
 }

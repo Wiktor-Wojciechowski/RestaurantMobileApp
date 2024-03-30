@@ -8,20 +8,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    onGoToOrder : () -> Unit = {}
+){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ){
         Text(text = "Welcome")
-        Button(onClick = {}){
-            Text("order food")
+        Button(onClick = {onGoToOrder()}){
+            Text("Order food")
         }
         Button(onClick = {}){
-            Text("book a table")
+            Text("Book a table")
         }
         Button(onClick = {}){
-            Text("log out")
+            Text("Log out")
         }
 
 

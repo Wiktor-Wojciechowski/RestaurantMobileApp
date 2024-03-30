@@ -1,5 +1,6 @@
 package com.example.restaurantapp.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,18 +24,18 @@ import com.example.restaurantapp.R
 import com.example.restaurantapp.network.LoginParams
 import com.example.restaurantapp.ui.theme.RestaurantAppTheme
 
-fun login(username:String, password:String){
-
-}
-
 @Composable
 fun LogInScreen(
+    loginState: LoginState,
     onGoToRegister: () -> Unit = {},
     onLogin: (params: LoginParams) -> Unit = {},
     onGoToHome: () -> Unit = {},
     modifier: Modifier = Modifier
 
 ) {
+    when(loginState){
+        is LoginState.Success -> onGoToHome()
+    }
     var username by remember {mutableStateOf("")}
     var password by remember { mutableStateOf("")}
     Column(
@@ -79,6 +80,6 @@ fun LogInScreenPreview(
 
 ){
     RestaurantAppTheme {
-        LogInScreen(onGoToRegister = {})
+        //LogInScreen(onGoToRegister = {})
     }
 }

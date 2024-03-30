@@ -8,4 +8,7 @@
     <string name="login">Log In</string>
     <string name="goToRegister">Go to Register</string>
     <string name="goToLogin">Go to Log In</string>
+    <string name="loading">Loading</string>
+    <string name="error">Error</string>
+    <string name="orderButton">Place an Order</string>
 </resources>
