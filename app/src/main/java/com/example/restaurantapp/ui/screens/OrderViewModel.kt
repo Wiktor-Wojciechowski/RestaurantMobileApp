@@ -31,11 +31,12 @@ class OrderViewModel(private val repository: RestaurantRepository): ViewModel() 
         viewModelScope.launch {
             Log.d("order_init", "init")
             orderState = OrderState.Loading
-            orderState = try {
-                OrderState.receivedDishes(repository.getDishes())
+            try {
+                orderState = OrderState.receivedDishes(repository.getDishes())
 
             }catch (e:Exception){
-                OrderState.Error
+                orderState = OrderState.Error
+                Log.d("dishException", e.toString())
             }
         }
     }

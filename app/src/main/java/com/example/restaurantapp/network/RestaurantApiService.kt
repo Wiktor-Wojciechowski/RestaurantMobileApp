@@ -39,5 +39,5 @@ interface RestaurantApiService {
     fun loginUser(@Body body: LoginParams): Call<ResponseBody>
 
     @GET("api/dish")
-    fun getDishes(): List<Dish>
+    suspend fun getDishes(): List<Dish>
 }
