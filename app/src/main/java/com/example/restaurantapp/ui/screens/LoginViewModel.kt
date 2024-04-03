@@ -24,9 +24,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 interface LoginState {
+    object Init : LoginState
     object Success : LoginState
     object Loading : LoginState
-    object Error : LoginState
+    data class Error(val errorMessage:String = "") : LoginState
+
 }
 class LoginViewModel(val repository: RestaurantRepository/*, val navController: NavController*/): ViewModel() {
     var loginState: LoginState by mutableStateOf(LoginState.Loading)
@@ -44,8 +46,12 @@ class LoginViewModel(val repository: RestaurantRepository/*, val navController: 
                         response: Response<ResponseBody>
                     ) {
                         if(!response.isSuccessful) {
-                            Log.d("responseE", response.toString())
-                            loginState = LoginState.Error
+                            Log.d("responseE", response.body().toString())
+                            if(response.code() == 401){
+                                loginState = LoginState.Error("Wrong username or password")
+                            }else{
+                                loginState = LoginState.Error("An error has occured")
+                            }
 
                         }else{
                             var jsonString = response.body()?.string()

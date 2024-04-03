@@ -27,6 +27,12 @@ data class Dish(
     val price: Int,
     val availability: Boolean
 )
+data class Order(
+    val price: Int,
+    val tableModelId: Int,
+    val dishModelsId: List<Int>,
+    val identityUserId: String
+)
 
 interface RestaurantApiService {
     @Headers("Content-Type:application/json")

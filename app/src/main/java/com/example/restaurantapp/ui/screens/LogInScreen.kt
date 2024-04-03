@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -14,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,18 +29,40 @@ import com.example.restaurantapp.ui.theme.RestaurantAppTheme
 
 @Composable
 fun LogInScreen(
-    loginState: LoginState,
+    loginState: LoginState = LoginState.Init,
     onGoToRegister: () -> Unit = {},
     onLogin: (params: LoginParams) -> Unit = {},
     onGoToHome: () -> Unit = {},
     modifier: Modifier = Modifier
 
 ) {
+
+    var isLoginError by rememberSaveable { mutableStateOf(false) }
+    var isUsernameError by rememberSaveable { mutableStateOf(false) }
+    var isPasswordError by rememberSaveable { mutableStateOf(false) }
+    var loginErrorMessage by rememberSaveable { mutableStateOf("error") }
+
     when(loginState){
         is LoginState.Success -> onGoToHome()
+        is LoginState.Error -> {
+            isLoginError = true
+            loginErrorMessage = loginState.errorMessage
+        }
     }
     var username by remember {mutableStateOf("")}
     var password by remember { mutableStateOf("")}
+
+    fun validateUsername(){
+        isUsernameError = username.isEmpty()
+    }
+    fun validatePassword(){
+        isPasswordError = password.isEmpty()
+    }
+    fun validateCredentials(){
+        validateUsername()
+        validatePassword()
+    }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -49,18 +74,45 @@ fun LogInScreen(
         Spacer(modifier = Modifier.size(8.dp))
         OutlinedTextField(
             value = username,
-            onValueChange = { username = it },
-            label = { Text(stringResource(R.string.username)) }
+            onValueChange = {
+                username = it
+                validateUsername()
+            },
+            label = { Text(stringResource(R.string.username)) },
+            supportingText = {
+                if (isUsernameError){
+                    Text(text = "Enter the username", color = MaterialTheme.colorScheme.error)
+                }
+            },
+            keyboardActions = KeyboardActions{validateUsername()}
         )
         OutlinedTextField(
             value = password,
-            onValueChange = { password = it },
-            label = { Text(stringResource(R.string.password)) }
+            onValueChange = {
+                password = it
+                validatePassword()
+            },
+            label = { Text(stringResource(R.string.password)) },
+            supportingText = {
+                if(isPasswordError) {
+                    Text(text = "Enter the password", color = MaterialTheme.colorScheme.error)
+                }
+            },
+            keyboardActions = KeyboardActions{validatePassword()}
         )
+        if(isLoginError){
+            Text(
+                text = loginErrorMessage,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
         Spacer(modifier = Modifier.size(8.dp))
         Button(onClick = {
-            var params = LoginParams(username, password)
-            onLogin(params)
+            validateCredentials()
+            if(!isUsernameError && !isPasswordError && !isLoginError){
+                var params = LoginParams(username, password)
+                onLogin(params)
+            }
         }) {
             Text(
                 text = stringResource(R.string.login)
@@ -80,6 +132,6 @@ fun LogInScreenPreview(
 
 ){
     RestaurantAppTheme {
-        //LogInScreen(onGoToRegister = {})
+        LogInScreen()
     }
 }
