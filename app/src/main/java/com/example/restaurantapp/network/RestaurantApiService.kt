@@ -1,5 +1,8 @@
 package com.example.restaurantapp.network
 
+import com.example.restaurantapp.model.Dish
+import com.example.restaurantapp.model.LoginParams
+import com.example.restaurantapp.model.RegisterParams
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -10,35 +13,12 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
-data class RegisterParams(
-    val username: String,
-    val email: String,
-    val password: String,
-    val age: String,
-)
-data class LoginParams(
-    val username: String,
-    val password: String
-)
-data class Dish(
-    val id: Int,
-    val name: String,
-    val description: String,
-    val price: Int,
-    val availability: Boolean
-)
-data class Order(
-    val price: Int,
-    val tableModelId: Int,
-    val dishModelsId: List<Int>,
-    val identityUserId: String
-)
 
 interface RestaurantApiService {
     @Headers("Content-Type:application/json")
     @POST("register-user")
     //make this work with suspend modifier
-    fun registerUser(@Body body: RegisterParams ): Call<ResponseBody>
+    fun registerUser(@Body body: RegisterParams): Call<ResponseBody>
 
     @Headers("Content-Type:application/json")
     @POST("login-user")

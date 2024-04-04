@@ -14,8 +14,7 @@ import androidx.navigation.NavController
 import com.example.restaurantapp.RestaurantApplication
 import com.example.restaurantapp.ui.RestaurantScreen
 import com.example.restaurantapp.data.RestaurantRepository
-import com.example.restaurantapp.network.Dish
-import com.example.restaurantapp.network.LoginParams
+import com.example.restaurantapp.model.LoginParams
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import org.json.JSONObject

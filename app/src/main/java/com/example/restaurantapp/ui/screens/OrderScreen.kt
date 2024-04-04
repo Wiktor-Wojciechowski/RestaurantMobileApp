@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.restaurantapp.R
-import com.example.restaurantapp.network.Dish
+
 
 @Composable
 fun OrderScreen(

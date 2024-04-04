@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import com.example.restaurantapp.RestaurantApplication
 import com.example.restaurantapp.ui.RestaurantScreen
 import com.example.restaurantapp.data.RestaurantRepository
-import com.example.restaurantapp.network.RegisterParams
+import com.example.restaurantapp.model.RegisterParams
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Call

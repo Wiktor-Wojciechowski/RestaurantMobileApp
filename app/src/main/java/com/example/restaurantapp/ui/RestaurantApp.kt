@@ -9,8 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.restaurantapp.data.RestaurantRepository
-import com.example.restaurantapp.network.LoginParams
-import com.example.restaurantapp.network.RegisterParams
+import com.example.restaurantapp.model.LoginParams
+import com.example.restaurantapp.model.RegisterParams
 import com.example.restaurantapp.ui.screens.HomeScreen
 import com.example.restaurantapp.ui.screens.LogInScreen
 import com.example.restaurantapp.ui.screens.LoginViewModel
@@ -63,7 +63,7 @@ fun RestaurantApp(
                         navController.navigate(RestaurantScreen.Login.name)
                     },
                     onRegister = {
-                        params:RegisterParams ->
+                        params: RegisterParams ->
                             viewModel.registerUser(params)
                     }
                 )

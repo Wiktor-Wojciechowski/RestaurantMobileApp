@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.restaurantapp.R
-import com.example.restaurantapp.network.LoginParams
+import com.example.restaurantapp.model.LoginParams
 import com.example.restaurantapp.ui.theme.RestaurantAppTheme
 
 @Composable
