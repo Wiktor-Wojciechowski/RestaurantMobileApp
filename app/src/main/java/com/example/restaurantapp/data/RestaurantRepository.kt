@@ -20,4 +20,5 @@ class RestaurantRepository (private val restaurantApiService: RestaurantApiServi
     suspend fun getDishes(): List<Dish>{
         return restaurantApiService.getDishes()
     }
+
 }

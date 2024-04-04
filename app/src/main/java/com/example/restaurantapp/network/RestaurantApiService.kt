@@ -26,4 +26,5 @@ interface RestaurantApiService {
 
     @GET("api/dish")
     suspend fun getDishes(): List<Dish>
+
 }

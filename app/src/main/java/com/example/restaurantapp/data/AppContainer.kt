@@ -36,4 +36,6 @@ class DefaultAppContainer: AppContainer{
     override val restaurantRepository: RestaurantRepository by lazy {
         RestaurantRepository(createApiService(createRetrofit()))
     }
+
+
 }
