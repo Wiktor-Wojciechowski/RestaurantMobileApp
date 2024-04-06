@@ -6,7 +6,6 @@ import com.example.restaurantapp.model.RegisterParams
 import com.example.restaurantapp.network.RestaurantApiService
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.Callback
 
 class RestaurantRepository (private val restaurantApiService: RestaurantApiService){
     suspend fun registerUser(body: RegisterParams): Call<ResponseBody>{

@@ -28,7 +28,7 @@ interface LoginState {
     data class Error(val errorMessage:String = "") : LoginState
 
 }
-class LoginViewModel(val repository: RestaurantRepository/*, val navController: NavController*/): ViewModel() {
+class LoginViewModel(val repository: RestaurantRepository): ViewModel() {
     var loginState: LoginState by mutableStateOf(LoginState.Loading)
         private set
     fun loginUser(params: LoginParams){
@@ -55,8 +55,7 @@ class LoginViewModel(val repository: RestaurantRepository/*, val navController: 
                             var jsonString = response.body()?.string()
                             val json = JSONObject(jsonString)
                             val token = json.get("token")
-                            Log.d("responseS", token.toString() ?: "noresponse")
-                            //navController.navigate(RestaurantScreen.Home.name)
+                            Log.d("responseS", token.toString())
                             AuthContext.setToken(token.toString())
                             Log.d("authToken", AuthContext.getToken())
                             loginState = LoginState.Success

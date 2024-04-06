@@ -1,6 +1,5 @@
 package com.example.restaurantapp.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,7 +9,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -81,7 +79,7 @@ fun LogInScreen(
             label = { Text(stringResource(R.string.username)) },
             supportingText = {
                 if (isUsernameError){
-                    Text(text = "Enter the username", color = MaterialTheme.colorScheme.error)
+                    Text(text = stringResource(R.string.empty_username_error), color = MaterialTheme.colorScheme.error)
                 }
             },
             keyboardActions = KeyboardActions{validateUsername()}
@@ -95,7 +93,7 @@ fun LogInScreen(
             label = { Text(stringResource(R.string.password)) },
             supportingText = {
                 if(isPasswordError) {
-                    Text(text = "Enter the password", color = MaterialTheme.colorScheme.error)
+                    Text(text = stringResource(R.string.empty_password_error), color = MaterialTheme.colorScheme.error)
                 }
             },
             keyboardActions = KeyboardActions{validatePassword()}

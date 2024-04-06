@@ -26,7 +26,5 @@ fun HomeScreen(
             Text("Log out")
         }
 
-
-
     }
 }

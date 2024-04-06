@@ -7,9 +7,7 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import androidx.navigation.NavController
 import com.example.restaurantapp.RestaurantApplication
-import com.example.restaurantapp.ui.RestaurantScreen
 import com.example.restaurantapp.data.RestaurantRepository
 import com.example.restaurantapp.model.RegisterParams
 import kotlinx.coroutines.launch
@@ -18,7 +16,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RegisterViewModel(val repository: RestaurantRepository/*, val navController: NavController*/):ViewModel() {
+class RegisterViewModel(val repository: RestaurantRepository):ViewModel() {
     fun registerUser(params: RegisterParams){
         viewModelScope.launch {
             try{
@@ -30,7 +28,6 @@ class RegisterViewModel(val repository: RestaurantRepository/*, val navControlle
                     ) {
                         if(response.isSuccessful) {
                             Log.d("responseS", response.body()?.string() ?: "noresponse")
-                            //navController.navigate(RestaurantScreen.Login.name)
                         }else{
                             Log.d("responseE", response.toString())
                         }

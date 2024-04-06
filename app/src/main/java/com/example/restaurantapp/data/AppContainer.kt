@@ -1,10 +1,5 @@
 package com.example.restaurantapp.data
 
-import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import com.example.restaurantapp.network.RestaurantApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,12 +11,11 @@ interface AppContainer {
 }
 
 class DefaultAppContainer: AppContainer{
-    //private const val BASE_URL = "https://httpbin.org/"
     private val BASE_URL = "https://restaurantapi20240224142603.azurewebsites.net/"
 
     fun createRetrofit(): Retrofit {
 
-        var interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor();
+        var interceptor = HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         var client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build();
 
