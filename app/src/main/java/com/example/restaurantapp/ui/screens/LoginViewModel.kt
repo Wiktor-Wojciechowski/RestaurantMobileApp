@@ -10,9 +10,8 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import androidx.navigation.NavController
 import com.example.restaurantapp.RestaurantApplication
-import com.example.restaurantapp.ui.RestaurantScreen
+import com.example.restaurantapp.data.AuthContext
 import com.example.restaurantapp.data.RestaurantRepository
 import com.example.restaurantapp.model.LoginParams
 import kotlinx.coroutines.launch
@@ -58,6 +57,8 @@ class LoginViewModel(val repository: RestaurantRepository/*, val navController: 
                             val token = json.get("token")
                             Log.d("responseS", token.toString() ?: "noresponse")
                             //navController.navigate(RestaurantScreen.Home.name)
+                            AuthContext.setToken(token.toString())
+                            Log.d("authToken", AuthContext.getToken())
                             loginState = LoginState.Success
                         }
                     }
