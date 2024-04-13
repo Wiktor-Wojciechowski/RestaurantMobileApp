@@ -17,6 +17,17 @@ data class Dish(
     val price: Int,
     val availability: Boolean
 )
+data class Infrastructure(
+    val numberOfRows: Int,
+    val numberOfColumns: Int
+)
+data class Table(
+    val id: Int,
+    val isAvailable: Boolean,
+    val numberOfSeats: Int,
+    val gridRow: Int,
+    val gridColumn: Int
+)
 data class Order(
     val price: Int,
     val tableModelId: Int,

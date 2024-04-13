@@ -16,12 +16,15 @@ import com.example.restaurantapp.ui.screens.OrderScreen
 import com.example.restaurantapp.ui.screens.OrderViewModel
 import com.example.restaurantapp.ui.screens.RegisterScreen
 import com.example.restaurantapp.ui.screens.RegisterViewModel
+import com.example.restaurantapp.ui.screens.TableChoiceScreen
+import com.example.restaurantapp.ui.screens.TableChoiceViewModel
 
 enum class RestaurantScreen {
     Login,
     Register,
     Home,
-    Order
+    Order,
+    Table
 }
 
 @Composable
@@ -74,8 +77,22 @@ fun RestaurantApp(
             
             composable(route = RestaurantScreen.Order.name){
                 val viewmodel : OrderViewModel = viewModel(factory = OrderViewModel.Factory)
-                OrderScreen(viewmodel.orderState)
+                OrderScreen(
+                    orderState = viewmodel.orderState,
+                    onGoToTableChoice = {
+                        navController.navigate(RestaurantScreen.Table.name)
+                    },
+                    onReturn = {
+                        navController.navigate(RestaurantScreen.Home.name)
+                    },
+                    viewModel = viewmodel
+                )
             }
+            composable(route = RestaurantScreen.Table.name){
+                val viewmodel: TableChoiceViewModel = viewModel(factory = TableChoiceViewModel.Factory)
+                TableChoiceScreen(tablesState = viewmodel.tablesState, infrastructureState = viewmodel.infrastructureState)
+            }
+
         }
     }
 }

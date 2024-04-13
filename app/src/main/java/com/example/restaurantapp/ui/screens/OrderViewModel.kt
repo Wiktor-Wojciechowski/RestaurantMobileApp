@@ -13,6 +13,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.restaurantapp.RestaurantApplication
 import com.example.restaurantapp.data.RestaurantRepository
 import com.example.restaurantapp.model.Dish
+import com.example.restaurantapp.model.Table
 import kotlinx.coroutines.launch
 
 interface OrderState {
@@ -20,11 +21,14 @@ interface OrderState {
     object Loading : OrderState
     object Error : OrderState
 }
+
 class OrderViewModel(private val repository: RestaurantRepository): ViewModel() {
     var orderState: OrderState by mutableStateOf(OrderState.Loading)
         private set
+
+    var cart = mutableListOf<Int>()
     init {
-        getDishes()
+        //getDishes()
     }
 
     fun getDishes(){
@@ -40,6 +44,13 @@ class OrderViewModel(private val repository: RestaurantRepository): ViewModel() 
             }
         }
     }
+    fun addDishToCart(dishID: Int){
+        Log.d("addDish","dish added")
+    }
+    fun removeDishFromCart(dishID: Int){
+        Log.d("remDish","dish removed")
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

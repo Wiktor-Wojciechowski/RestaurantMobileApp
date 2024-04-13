@@ -50,7 +50,7 @@ class RegisterViewModel(val repository: RestaurantRepository):ViewModel() {
             initializer {
                 val application = (this[APPLICATION_KEY] as RestaurantApplication)
                 val restaurantRepository = application.container.restaurantRepository
-                LoginViewModel(repository = restaurantRepository)
+                RegisterViewModel(repository = restaurantRepository)
             }
         }
     }

@@ -13,4 +13,6 @@
     <string name="orderButton">Place an Order</string>
     <string name="empty_username_error">Enter the username</string>
     <string name="empty_password_error">Enter the password</string>
+    <string name="return_button">Return</string>
+    <string name="goToTableChoiceButton">Choose a table</string>
 </resources>
