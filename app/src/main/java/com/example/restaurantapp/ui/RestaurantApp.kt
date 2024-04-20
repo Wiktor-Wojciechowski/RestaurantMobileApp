@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.restaurantapp.model.LoginParams
 import com.example.restaurantapp.model.RegisterParams
+import com.example.restaurantapp.ui.screens.FinalizeOrderScreen
 import com.example.restaurantapp.ui.screens.HomeScreen
 import com.example.restaurantapp.ui.screens.LogInScreen
 import com.example.restaurantapp.ui.screens.LoginViewModel
@@ -24,7 +25,8 @@ enum class RestaurantScreen {
     Register,
     Home,
     Order,
-    Table
+    TableChoice,
+    FinalizeOrder
 }
 
 @Composable
@@ -74,13 +76,13 @@ fun RestaurantApp(
                     }
                 )
             }
-            
+
             composable(route = RestaurantScreen.Order.name){
                 val viewmodel : OrderViewModel = viewModel(factory = OrderViewModel.Factory)
                 OrderScreen(
                     orderState = viewmodel.orderState,
                     onGoToTableChoice = {
-                        navController.navigate(RestaurantScreen.Table.name)
+                        navController.navigate(RestaurantScreen.TableChoice.name)
                     },
                     onReturn = {
                         navController.navigate(RestaurantScreen.Home.name)
@@ -88,9 +90,19 @@ fun RestaurantApp(
                     viewModel = viewmodel
                 )
             }
-            composable(route = RestaurantScreen.Table.name){
+            composable(route = RestaurantScreen.TableChoice.name){
                 val viewmodel: TableChoiceViewModel = viewModel(factory = TableChoiceViewModel.Factory)
-                TableChoiceScreen(tablesState = viewmodel.tablesState, infrastructureState = viewmodel.infrastructureState)
+                TableChoiceScreen(
+                    tablesState = viewmodel.tablesState,
+                    infrastructureState = viewmodel.infrastructureState,
+                    viewModel = viewmodel,
+                    onTableChosen = {
+                        navController.navigate(RestaurantScreen.FinalizeOrder.name)
+                    }
+                )
+            }
+            composable(route = RestaurantScreen.FinalizeOrder.name){
+                //FinalizeOrderScreen()
             }
 
         }

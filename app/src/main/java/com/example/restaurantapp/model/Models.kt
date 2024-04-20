@@ -28,6 +28,7 @@ data class Table(
     val gridRow: Int,
     val gridColumn: Int
 )
+
 data class Order(
     val price: Int,
     val tableModelId: Int,

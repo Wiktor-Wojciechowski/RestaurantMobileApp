@@ -31,6 +31,7 @@ class TableChoiceViewModel(val repository: RestaurantRepository): ViewModel() {
         private set
     var infrastructureState: InfrastructureState by mutableStateOf(InfrastructureState.Loading)
         private set
+    var chosenTableId: Int? = null
 
     init {
         getInfrastrucutre()

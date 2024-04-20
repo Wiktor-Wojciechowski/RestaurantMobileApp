@@ -1,10 +1,14 @@
 package com.example.restaurantapp.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -12,6 +16,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -22,17 +30,17 @@ import com.example.restaurantapp.model.Dish
 
 var fakeDishes = listOf(
     Dish(0,"pierogtgi","string", 1, true),
-    Dish(0,"kapusniak","string", 2, true),
-    Dish(0,"spaghetti","string", 3, true),
-    Dish(0,"pelmeni","string", 2, false),
-    Dish(0,"nalesniki","string", 1, true),
-    Dish(0,"rosol","string", 4, true),
-    Dish(0,"pierogi","string", 1, true),
-    Dish(0,"kapusniak","string", 2, true),
-    Dish(0,"spaghetti","string", 3, true),
-    Dish(0,"pelmeni","string", 2, false),
-    Dish(0,"nalesniki","string", 1, true),
-    Dish(0,"rosol","string", 4, true),
+    Dish(1,"kapusniak","string", 2, true),
+    Dish(2,"spaghetti","string", 3, true),
+    Dish(3,"pelmeni","string", 2, false),
+    Dish(4,"nalesniki","string string string string string string string string string string string string string string string string string string string ", 1, true),
+    Dish(5,"rosol","string", 4, true),
+    Dish(6,"pierogi","string", 1, true),
+    Dish(7,"kapusniak","string", 2, true),
+    Dish(8,"spaghetti","string", 3, true),
+    Dish(9,"pelmeni","string", 2, false),
+    Dish(10,"nalesniki","string", 1, true),
+    Dish(11,"rosol","string", 4, true),
 
 )
 
@@ -68,10 +76,12 @@ fun OrderScreen(
         fakeDishes.forEach{ dish ->
             Card(
                 modifier = Modifier
-                    .size(width = 240.dp, height = 100.dp)
                     .padding(4.dp)
+                    .wrapContentHeight()
+                    .defaultMinSize(350.dp, 100.dp)
+                    .widthIn(max = 350.dp)
 
-            ) {
+                ) {
                 Text(
                     dish.name,
                     modifier = Modifier
@@ -81,13 +91,27 @@ fun OrderScreen(
                 Text(dish.availability.toString())
                 Text(dish.price.toString())
                 //Checkbox(checked = false, onCheckedChange = {onDishChecked(viewModel, dish.id)})
-                Row(){
-                    Button(onClick = { /*TODO*/ }) {
-                        
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    var amount: String by remember{mutableStateOf("0")}
+                    Button(onClick = {
+                        viewModel.removeDishFromCart(dish.id)
+                        amount = viewModel.cart.count{it == dish.id}.toString()
+                        Log.d("cart:", viewModel.cart.toString())
+                    }) {
+                        Text(text = "-")
                     }
-                    Text(text = "")
-                    Button(onClick = { /*TODO*/ }) {
-                        
+                    Text(
+                        modifier = Modifier.padding(16.dp),
+                        text = amount
+                    )
+                    Button(onClick = {
+                        viewModel.addDishToCart(dish.id)
+                        amount = viewModel.cart.count{it == dish.id}.toString()
+                        Log.d("cart:", viewModel.cart.toString())
+                    }) {
+                        Text(text = "+")
                     }
                 }
             }

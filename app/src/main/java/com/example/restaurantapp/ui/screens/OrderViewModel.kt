@@ -45,10 +45,10 @@ class OrderViewModel(private val repository: RestaurantRepository): ViewModel() 
         }
     }
     fun addDishToCart(dishID: Int){
-        Log.d("addDish","dish added")
+        cart.add(dishID)
     }
     fun removeDishFromCart(dishID: Int){
-        Log.d("remDish","dish removed")
+        cart.remove(dishID)
     }
 
     companion object {
