@@ -10,6 +10,10 @@ data class LoginParams(
     val username: String,
     val password: String
 )
+data class User(
+    val id: String,
+    val token: String
+)
 data class Dish(
     val id: Int,
     val name: String,
@@ -30,7 +34,7 @@ data class Table(
 )
 
 data class Order(
-    val price: Int,
+    //val price: Int,
     val tableModelId: Int,
     val dishModelsId: List<Int>,
     val identityUserId: String

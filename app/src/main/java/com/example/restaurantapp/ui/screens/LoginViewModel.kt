@@ -14,6 +14,7 @@ import com.example.restaurantapp.RestaurantApplication
 import com.example.restaurantapp.data.AuthContext
 import com.example.restaurantapp.data.RestaurantRepository
 import com.example.restaurantapp.model.LoginParams
+import com.example.restaurantapp.model.User
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -54,10 +55,11 @@ class LoginViewModel(val repository: RestaurantRepository): ViewModel() {
                         }else{
                             var jsonString = response.body()?.string()
                             val json = JSONObject(jsonString)
-                            val token = json.get("token")
-                            Log.d("responseS", token.toString())
-                            AuthContext.setToken(token.toString())
-                            Log.d("authToken", AuthContext.getToken())
+                            val token = json.getString("token")
+                            val id = json.getString("userId")
+                            Log.d("responseS", token)
+                            AuthContext.setUser(User(id,token))
+
                             loginState = LoginState.Success
                         }
                     }

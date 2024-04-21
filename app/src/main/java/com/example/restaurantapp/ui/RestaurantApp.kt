@@ -6,14 +6,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.restaurantapp.model.LoginParams
 import com.example.restaurantapp.model.RegisterParams
 import com.example.restaurantapp.ui.screens.FinalizeOrderScreen
+import com.example.restaurantapp.ui.screens.FoodChoiceScreen
+import com.example.restaurantapp.ui.screens.FoodChoiceViewModel
 import com.example.restaurantapp.ui.screens.HomeScreen
 import com.example.restaurantapp.ui.screens.LogInScreen
 import com.example.restaurantapp.ui.screens.LoginViewModel
-import com.example.restaurantapp.ui.screens.OrderScreen
 import com.example.restaurantapp.ui.screens.OrderViewModel
 import com.example.restaurantapp.ui.screens.RegisterScreen
 import com.example.restaurantapp.ui.screens.RegisterViewModel
@@ -25,6 +27,7 @@ enum class RestaurantScreen {
     Register,
     Home,
     Order,
+    FoodChoice,
     TableChoice,
     FinalizeOrder
 }
@@ -33,6 +36,7 @@ enum class RestaurantScreen {
 fun RestaurantApp(
     navController: NavHostController = rememberNavController()
 ){
+    val orderViewModel : OrderViewModel = viewModel(factory = OrderViewModel.Factory)
     Surface {
         NavHost(
             navController = navController,
@@ -55,7 +59,6 @@ fun RestaurantApp(
                     }
                 )
             }
-
             composable(route = RestaurantScreen.Register.name){
                 val viewModel : RegisterViewModel = viewModel(factory = RegisterViewModel.Factory)
                 RegisterScreen(
@@ -77,34 +80,43 @@ fun RestaurantApp(
                 )
             }
 
-            composable(route = RestaurantScreen.Order.name){
-                val viewmodel : OrderViewModel = viewModel(factory = OrderViewModel.Factory)
-                OrderScreen(
-                    orderState = viewmodel.orderState,
-                    onGoToTableChoice = {
-                        navController.navigate(RestaurantScreen.TableChoice.name)
-                    },
-                    onReturn = {
-                        navController.navigate(RestaurantScreen.Home.name)
-                    },
-                    viewModel = viewmodel
-                )
-            }
-            composable(route = RestaurantScreen.TableChoice.name){
-                val viewmodel: TableChoiceViewModel = viewModel(factory = TableChoiceViewModel.Factory)
-                TableChoiceScreen(
-                    tablesState = viewmodel.tablesState,
-                    infrastructureState = viewmodel.infrastructureState,
-                    viewModel = viewmodel,
-                    onTableChosen = {
-                        navController.navigate(RestaurantScreen.FinalizeOrder.name)
-                    }
-                )
-            }
-            composable(route = RestaurantScreen.FinalizeOrder.name){
-                //FinalizeOrderScreen()
-            }
+            navigation(
+                startDestination = RestaurantScreen.FoodChoice.name,
+                route = RestaurantScreen.Order.name
+            ){
 
+                composable(route = RestaurantScreen.FoodChoice.name){
+                    val viewmodel : FoodChoiceViewModel = viewModel(factory = FoodChoiceViewModel.Factory)
+                    FoodChoiceScreen(
+                        foodState = viewmodel.foodState,
+                        onGoToTableChoice = {
+                            navController.navigate(RestaurantScreen.TableChoice.name)
+                        },
+                        onReturn = {
+                            navController.navigate(RestaurantScreen.Home.name)
+                        },
+                        viewModel = viewmodel,
+                        orderViewModel = orderViewModel
+                    )
+                }
+
+                composable(route = RestaurantScreen.TableChoice.name){
+                    val viewmodel: TableChoiceViewModel = viewModel(factory = TableChoiceViewModel.Factory)
+                    TableChoiceScreen(
+                        tablesState = viewmodel.tablesState,
+                        infrastructureState = viewmodel.infrastructureState,
+                        viewModel = viewmodel,
+                        onTableChosen = {
+                            navController.navigate(RestaurantScreen.FinalizeOrder.name)
+                        },
+                        orderViewModel = orderViewModel
+                    )
+                }
+
+                composable(route = RestaurantScreen.FinalizeOrder.name){
+                    FinalizeOrderScreen(orderState = orderViewModel.orderState, orderViewModel = orderViewModel)
+                }
+            }
         }
     }
 }

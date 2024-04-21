@@ -8,16 +8,25 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun FinalizeOrderScreen(
-    orderVM: OrderViewModel,
-    tableVM: TableChoiceViewModel,
-    onGoToHome: () -> Unit = {}
+    onGoToHome: () -> Unit = {},
+    orderViewModel: OrderViewModel,
+    orderState: OrderState
 ){
     Column(){
         Column(){
-            //chosen dishes
+            orderViewModel.getCart()
         }
         Card(){
-            //chosen table
+            orderViewModel.getTable().toString()
+        }
+        Button(
+            onClick = { orderViewModel.sendOrder() },
+            enabled = orderState != OrderState.Success
+        ) {
+            Text(text = "Finalize Order")
+        }
+        if(orderState == OrderState.Error){
+            Text(text = "Something went wrong")
         }
         Button(onClick = { onGoToHome() }) {
             Text(text = "Return Home")

@@ -1,14 +1,15 @@
 package com.example.restaurantapp.data
 
+import com.example.restaurantapp.model.User
+
 object AuthContext {
-    private var token: String = ""
-    fun setToken(newToken: String){
-        token = newToken
+    private lateinit var user: User
+
+    fun setUser(new_user: User){
+        user = new_user
     }
-    fun getToken(): String {
-        return token
+    fun getUser(): User{
+        return user
     }
-    fun removeToken() {
-        token = ""
-    }
+
 }

@@ -6,14 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,7 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.restaurantapp.R
 import com.example.restaurantapp.model.Dish
@@ -45,11 +42,12 @@ var fakeDishes = listOf(
 )
 
 @Composable
-fun OrderScreen(
-    orderState: OrderState,
+fun FoodChoiceScreen(
+    foodState: FoodState,
     onGoToTableChoice: () -> Unit = {},
     onReturn: () -> Unit = {},
-    viewModel: OrderViewModel
+    viewModel: FoodChoiceViewModel,
+    orderViewModel: OrderViewModel
 ) {
 
     Column(
@@ -59,11 +57,11 @@ fun OrderScreen(
             .verticalScroll(rememberScrollState())
     ) {
         /*
-        when (orderState) {
-            is OrderState.Loading -> Text(stringResource(R.string.loading))
-            is OrderState.Error -> Text(stringResource(R.string.error))
-            is OrderState.receivedDishes -> Column {
-                orderState.dishes.forEach { dish ->
+        when (foodState) {
+            is FoodState.Loading -> Text(stringResource(R.string.loading))
+            is FoodState.Error -> Text(stringResource(R.string.error))
+            is FoodState.receivedDishes -> Column {
+                foodState.dishes.forEach { dish ->
                     Card {
                         Text(dish.name)
                     }
@@ -117,7 +115,10 @@ fun OrderScreen(
             }
 
         }
-        Button(onClick = {onGoToTableChoice()}) {
+        Button(onClick = {
+            orderViewModel.setCart(viewModel.cart)
+            onGoToTableChoice()
+        }) {
             Text(text = stringResource(R.string.goToTableChoiceButton))
         }
 
@@ -127,9 +128,9 @@ fun OrderScreen(
     }
 }
 
-fun addDishToCart(viewmodel: OrderViewModel, dishID:Int) {
+fun addDishToCart(viewmodel: FoodChoiceViewModel, dishID:Int) {
     viewmodel.addDishToCart(dishID)
 }
-fun removeDishFromCart(viewmodel: OrderViewModel, dishID:Int){
+fun removeDishFromCart(viewmodel: FoodChoiceViewModel, dishID:Int){
     viewmodel.removeDishFromCart(dishID)
 }

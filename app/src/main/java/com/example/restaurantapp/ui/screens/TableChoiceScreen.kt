@@ -15,13 +15,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.restaurantapp.R
+import com.example.restaurantapp.model.Table
 
 @Composable
 fun TableChoiceScreen(
     tablesState: TablesState = TablesState.Loading,
     infrastructureState: InfrastructureState = InfrastructureState.Loading,
     viewModel: TableChoiceViewModel,
-    onTableChosen: () -> Unit
+    onTableChosen: () -> Unit,
+    orderViewModel: OrderViewModel
 ) {
     when (infrastructureState) {
         is InfrastructureState.Loading -> Text(stringResource(R.string.loading))
@@ -46,11 +48,10 @@ fun TableChoiceScreen(
                                         for (table in tables) {
                                             if(rowIndex == table.gridRow && columnIndex == table.gridColumn){
                                                 TableSpot(
-                                                    isAvailable = table.isAvailable,
-                                                    seats = table.numberOfSeats,
+                                                    table = table,
                                                     viewModel = viewModel,
-                                                    tableId = table.id,
-                                                    onTableChosen = {onTableChosen()}
+                                                    onTableChosen = {onTableChosen()},
+                                                    orderViewModel = orderViewModel
                                                 )
                                             }
                                         }
@@ -68,15 +69,14 @@ fun TableChoiceScreen(
 
 @Composable
 fun TableSpot(
-    isAvailable:Boolean,
-    tableId:Int,
-    seats: Int,
+    table: Table,
     viewModel: TableChoiceViewModel,
     onTableChosen: () -> Unit = {},
+    orderViewModel: OrderViewModel
 ){
     Card(){
         Box{
-            if(isAvailable){
+            if(table.isAvailable){
                 Image(painter = painterResource(id = R.drawable.available_table), "available table")
 
             }else{
@@ -84,15 +84,16 @@ fun TableSpot(
             }
         }
 
-        Text("Number of seats: $seats")
-        if (!isAvailable) Text("Table unavailable")
+        Text("Number of seats: ${table.numberOfSeats}")
+        if (!table.isAvailable) Text("Table unavailable")
         Button(
             onClick = {
-                viewModel.chosenTableId = tableId
-                Log.d("chosenTable:", tableId.toString())
+                viewModel.chosenTableId = table.id
+                orderViewModel.setTable(table)
+                Log.d("chosenTable:", table.id.toString())
                 onTableChosen()
                 },
-            enabled = isAvailable
+            enabled = table.isAvailable
         ){
             Text("Choose")
         }
