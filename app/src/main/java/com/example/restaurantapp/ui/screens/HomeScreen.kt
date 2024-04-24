@@ -9,7 +9,8 @@ import androidx.compose.ui.Alignment
 
 @Composable
 fun HomeScreen(
-    onGoToOrder : () -> Unit = {}
+    onGoToOrder : () -> Unit = {},
+    onGoToUserOrders : () -> Unit = {}
 ){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -19,8 +20,8 @@ fun HomeScreen(
         Button(onClick = {onGoToOrder()}){
             Text("Order food")
         }
-        Button(onClick = {}){
-            Text("Book a table")
+        Button(onClick = {onGoToUserOrders()}){
+            Text("My Orders")
         }
         Button(onClick = {}){
             Text("Log out")

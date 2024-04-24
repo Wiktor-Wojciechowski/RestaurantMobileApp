@@ -21,6 +21,8 @@ import com.example.restaurantapp.ui.screens.RegisterScreen
 import com.example.restaurantapp.ui.screens.RegisterViewModel
 import com.example.restaurantapp.ui.screens.TableChoiceScreen
 import com.example.restaurantapp.ui.screens.TableChoiceViewModel
+import com.example.restaurantapp.ui.screens.UserOrdersScreen
+import com.example.restaurantapp.ui.screens.UserOrdersViewModel
 
 enum class RestaurantScreen {
     Login,
@@ -29,7 +31,8 @@ enum class RestaurantScreen {
     Order,
     FoodChoice,
     TableChoice,
-    FinalizeOrder
+    FinalizeOrder,
+    UserOrders
 }
 
 @Composable
@@ -76,6 +79,9 @@ fun RestaurantApp(
                 HomeScreen(
                     onGoToOrder = {
                         navController.navigate(RestaurantScreen.Order.name)
+                    },
+                    onGoToUserOrders = {
+                        navController.navigate(RestaurantScreen.UserOrders.name)
                     }
                 )
             }
@@ -116,6 +122,10 @@ fun RestaurantApp(
                 composable(route = RestaurantScreen.FinalizeOrder.name){
                     FinalizeOrderScreen(orderState = orderViewModel.orderState, orderViewModel = orderViewModel)
                 }
+            }
+            composable(route = RestaurantScreen.UserOrders.name){
+                val viewmodel: UserOrdersViewModel = viewModel(factory = UserOrdersViewModel.Factory)
+                UserOrdersScreen(userOrdersState = viewmodel.userOrdersState)
             }
         }
     }

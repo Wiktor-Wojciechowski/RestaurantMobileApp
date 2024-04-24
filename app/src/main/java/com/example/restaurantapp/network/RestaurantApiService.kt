@@ -1,9 +1,11 @@
 package com.example.restaurantapp.network
 
+import com.example.restaurantapp.data.AuthContext
 import com.example.restaurantapp.model.Dish
 import com.example.restaurantapp.model.Infrastructure
 import com.example.restaurantapp.model.LoginParams
 import com.example.restaurantapp.model.Order
+import com.example.restaurantapp.model.ReceivedOrder
 import com.example.restaurantapp.model.RegisterParams
 import com.example.restaurantapp.model.Table
 import okhttp3.ResponseBody
@@ -13,6 +15,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 
 interface RestaurantApiService {
@@ -36,5 +39,9 @@ interface RestaurantApiService {
 
     @POST("api/order")
     fun sendOrder(@Header("Authorization") token: String, @Body body: Order): Call<ResponseBody>
+
+    @GET("GetAllUserOrders/{userId}")
+    //fun getOrders(@Path("userId") userId: String, @Header("Authorization") token: String): Call<ResponseBody>
+    suspend fun getOrders(@Path("userId") userId: String, @Header("Authorization") token: String): List<ReceivedOrder>
 
 }

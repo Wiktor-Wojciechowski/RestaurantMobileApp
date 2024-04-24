@@ -92,7 +92,7 @@ fun FoodChoiceScreen(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    var amount: String by remember{mutableStateOf("0")}
+                    var amount: String by remember{mutableStateOf(viewModel.cart.count{it == dish.id}.toString())}
                     Button(onClick = {
                         viewModel.removeDishFromCart(dish.id)
                         amount = viewModel.cart.count{it == dish.id}.toString()

@@ -39,3 +39,24 @@ data class Order(
     val dishModelsId: List<Int>,
     val identityUserId: String
 )
+
+data class ReceivedOrder(
+    val id: Int,
+    val status: Int,
+    val price: Int,
+    val tableModelId: Int,
+    val tableModel: ReceivedTable,
+    val dishModels: List<Any>,
+    val identityUserId: String,
+    val identityUserModel: Any
+)
+
+data class ReceivedTable(
+    val id: Int,
+    val isAvailable: Boolean,
+    val numberOfSeats: Int,
+    val gridRow: Int,
+    val gridColumn: Int,
+    val orderModels: Any,
+    val reservations: Any
+)
