@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -41,6 +42,10 @@ fun TableChoiceScreen(
                     is TablesState.Error -> Text(stringResource(R.string.error))
                     is TablesState.receivedTables ->
                         Column {
+                            Text(
+                                text ="Choose Your Table",
+                                style = MaterialTheme.typography.headlineLarge,
+                            )
                             var rows = infrastructureState.infrastructure.numberOfRows
                             var columns = infrastructureState.infrastructure.numberOfColumns
                             var tables = tablesState.tables
