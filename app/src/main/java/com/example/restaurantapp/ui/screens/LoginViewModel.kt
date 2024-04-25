@@ -39,6 +39,7 @@ class LoginViewModel(val repository: RestaurantRepository): ViewModel() {
                 call.enqueue(object: Callback<ResponseBody>{
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                         Log.d("LoginResponseT", t.message ?: "null throwable")
+                        loginState = LoginState.Error("An error has occured. Try again")
                     }
                     override fun onResponse(
                         call: Call<ResponseBody>,

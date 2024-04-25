@@ -27,7 +27,7 @@ class FoodChoiceViewModel(private val repository: RestaurantRepository): ViewMod
 
     var cart = mutableListOf<Int>()
     init {
-        //getDishes()
+        getDishes()
     }
 
     fun getDishes(){

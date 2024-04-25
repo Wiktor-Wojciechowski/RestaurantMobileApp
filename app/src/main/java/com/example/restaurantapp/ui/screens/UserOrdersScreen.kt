@@ -9,18 +9,22 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun UserOrdersScreen(
-    userOrdersState: UserOrdersState
+    userOrdersState: UserOrdersState,
+    onCancelOrder: () -> Unit = {},
+    viewModel: UserOrdersViewModel
 ){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -56,6 +60,14 @@ fun UserOrdersScreen(
                             Text("Table Model: "+order.tableModel.toString())
                             Text("Status: "+order.status)
                             Text("Price: "+order.price)
+                            /*
+                            if(order.status == 2){
+                                Button(onClick = { viewModel.cancelOrder(order.id) }) {
+                                    Text("Cancel Order")
+                                }
+                            }
+
+                             */
                         }
                     }
                 }

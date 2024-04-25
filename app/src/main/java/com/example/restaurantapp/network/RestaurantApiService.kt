@@ -11,6 +11,7 @@ import com.example.restaurantapp.model.Table
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
@@ -44,4 +45,6 @@ interface RestaurantApiService {
     //fun getOrders(@Path("userId") userId: String, @Header("Authorization") token: String): Call<ResponseBody>
     suspend fun getOrders(@Path("userId") userId: String, @Header("Authorization") token: String): List<ReceivedOrder>
 
+    @DELETE("/api/Dish/{orderId}")
+    fun cancelOrder(@Path("orderId") orderId: Int, @Header("Authorization") token:String): Call<ResponseBody>
 }

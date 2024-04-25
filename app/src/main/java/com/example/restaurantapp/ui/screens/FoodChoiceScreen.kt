@@ -56,21 +56,60 @@ fun FoodChoiceScreen(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
     ) {
-        /*
+
         when (foodState) {
             is FoodState.Loading -> Text(stringResource(R.string.loading))
             is FoodState.Error -> Text(stringResource(R.string.error))
             is FoodState.receivedDishes -> Column {
                 foodState.dishes.forEach { dish ->
-                    Card {
-                        Text(dish.name)
+                    Card(
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .wrapContentHeight()
+                            .defaultMinSize(350.dp, 100.dp)
+                            .widthIn(max = 350.dp)
+
+                        ) {
+                        Text(
+                            dish.name,
+                            modifier = Modifier
+                                .padding(8.dp)
+                        )
+                        Text(dish.description)
+                        Text(dish.availability.toString())
+                        Text(dish.price.toString())
+                        //Checkbox(checked = false, onCheckedChange = {onDishChecked(viewModel, dish.id)})
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            var amount: String by remember{mutableStateOf(viewModel.cart.count{it == dish.id}.toString())}
+                            Button(onClick = {
+                                viewModel.removeDishFromCart(dish.id)
+                                amount = viewModel.cart.count{it == dish.id}.toString()
+                                Log.d("cart:", viewModel.cart.toString())
+                            }) {
+                                Text(text = "-")
+                            }
+                            Text(
+                                modifier = Modifier.padding(16.dp),
+                                text = amount
+                            )
+                            Button(onClick = {
+                                viewModel.addDishToCart(dish.id)
+                                amount = viewModel.cart.count{it == dish.id}.toString()
+                                Log.d("cart:", viewModel.cart.toString())
+                            }) {
+                                Text(text = "+")
+                            }
+                        }
                     }
 
                 }
             }
         }
 
-         */
+
+        /*
         fakeDishes.forEach{ dish ->
             Card(
                 modifier = Modifier
@@ -115,6 +154,7 @@ fun FoodChoiceScreen(
             }
 
         }
+         */
         Button(onClick = {
             orderViewModel.setCart(viewModel.cart)
             onGoToTableChoice()

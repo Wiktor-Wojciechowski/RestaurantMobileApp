@@ -2,6 +2,7 @@ package com.example.restaurantapp.ui.screens
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +34,7 @@ fun TableChoiceScreen(
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
+                    .horizontalScroll(rememberScrollState())
             ){
                 when (tablesState) {
                     is TablesState.Loading -> Text(stringResource(R.string.loading))

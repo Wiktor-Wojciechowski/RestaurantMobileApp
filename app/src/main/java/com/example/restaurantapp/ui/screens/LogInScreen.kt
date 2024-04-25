@@ -109,7 +109,7 @@ fun LogInScreen(
         Spacer(modifier = Modifier.size(8.dp))
         Button(onClick = {
             validateCredentials()
-            if(!isUsernameError && !isPasswordError && !isLoginError){
+            if(!isUsernameError && !isPasswordError){
                 var params = LoginParams(username, password)
                 onLogin(params)
             }
