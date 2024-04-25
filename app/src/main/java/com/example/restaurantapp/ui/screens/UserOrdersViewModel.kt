@@ -38,28 +38,6 @@ class UserOrdersViewModel(private val repository: RestaurantRepository) : ViewMo
             Log.d("order_init", "init")
 
             try {
-                /*
-                var call = repository.getOrders(AuthContext.getUser().id, "Bearer "+AuthContext.getUser().token)
-                call.enqueue(object: Callback<ResponseBody>{
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        Log.d("userOrdersError", t.message.toString())
-                    }
-
-                    override fun onResponse(
-                        call: Call<ResponseBody>,
-                        response: Response<ResponseBody>
-                    ) {
-                        if(!response.isSuccessful){
-                            Log.d("userOrdersResponseFail", response.message())
-                        }else{
-                            var jsonString = response.body()?.string()
-                            Log.d("userOrdersResponse", jsonString ?: "")
-                        }
-
-                    }
-                })
-
-                 */
                 userOrdersState = UserOrdersState.receivedOrders(repository.getOrders(AuthContext.getUser().id, "Bearer "+AuthContext.getUser().token))
 
             }catch (e:Exception){

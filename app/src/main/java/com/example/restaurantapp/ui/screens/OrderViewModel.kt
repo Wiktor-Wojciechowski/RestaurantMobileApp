@@ -48,7 +48,6 @@ class OrderViewModel(private val repository: RestaurantRepository): ViewModel(){
         var new_order = Order (
             dishModelsId = getCart(),
             tableModelId = getTable()?.id ?: -1,
-            //price = 0,
             identityUserId = AuthContext.getUser().id
         )
         viewModelScope.launch {
