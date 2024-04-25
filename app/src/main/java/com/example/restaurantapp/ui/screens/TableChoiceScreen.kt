@@ -79,15 +79,17 @@ fun TableSpot(
     Card(){
         Box{
             if(table.isAvailable){
-                Image(painter = painterResource(id = R.drawable.available_table), "available table")
+                Image(painter = painterResource(id = R.drawable.available_table),
+                    stringResource(R.string.an_available_table_description))
 
             }else{
-                Image(painter = painterResource(id = R.drawable.unavailable_table), "unavailable table")
+                Image(painter = painterResource(id = R.drawable.unavailable_table),
+                    stringResource(R.string.an_unavailable_table_description))
             }
         }
 
         Text("Number of seats: ${table.numberOfSeats}")
-        if (!table.isAvailable) Text("Table unavailable")
+        if (!table.isAvailable) Text(stringResource(R.string.table_unavailable))
         Button(
             onClick = {
                 viewModel.chosenTableId = table.id
@@ -97,7 +99,7 @@ fun TableSpot(
                 },
             enabled = table.isAvailable
         ){
-            Text("Choose")
+            Text(stringResource(R.string.choose_button))
         }
     }
 }

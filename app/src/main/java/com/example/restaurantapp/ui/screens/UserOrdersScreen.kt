@@ -16,9 +16,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.restaurantapp.R
 
 @Composable
 fun UserOrdersScreen(
@@ -32,15 +34,15 @@ fun UserOrdersScreen(
             .verticalScroll(rememberScrollState())
     ){
         when(userOrdersState){
-            is UserOrdersState.Loading -> Text("Loading")
-            is UserOrdersState.Error -> Text(text = "Error")
+            is UserOrdersState.Loading -> Text(stringResource(R.string.loading))
+            is UserOrdersState.Error -> Text(stringResource(R.string.error))
             is UserOrdersState.receivedOrders ->
                 Column(
                     modifier = Modifier
                         .widthIn(max = 350.dp)
                 ) {
                     Text(
-                        text = "Your Orders: ",
+                        text = stringResource(R.string.your_orders_heading),
                         modifier = Modifier
                             .fillMaxWidth(),
                         style = MaterialTheme.typography.headlineLarge,
@@ -55,11 +57,11 @@ fun UserOrdersScreen(
                                 .widthIn(max = 350.dp)
 
                         ){
-                            Text("Dish Models: "+order.dishModels.toString())
-                            Text("Table Id: "+order.tableModelId)
-                            Text("Table Model: "+order.tableModel.toString())
-                            Text("Status: "+order.status)
-                            Text("Price: "+order.price)
+                            Text(stringResource(R.string.dishes) +order.dishModels.toString())
+                            Text(stringResource(R.string.table_number) +order.tableModelId)
+                            Text(stringResource(R.string.table) +order.tableModel.toString())
+                            Text(stringResource(R.string.status) +order.status)
+                            Text(stringResource(R.string.price) +order.price)
                             /*
                             if(order.status == 2){
                                 Button(onClick = { viewModel.cancelOrder(order.id) }) {

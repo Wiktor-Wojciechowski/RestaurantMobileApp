@@ -5,6 +5,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.example.restaurantapp.R
 
 @Composable
 fun FinalizeOrderScreen(
@@ -23,13 +25,13 @@ fun FinalizeOrderScreen(
             onClick = { orderViewModel.sendOrder() },
             enabled = orderState != OrderState.Success
         ) {
-            Text(text = "Finalize Order")
+            Text(text = stringResource(R.string.finalize_order_button))
         }
         if(orderState == OrderState.Error){
-            Text(text = "Something went wrong")
+            Text(text = stringResource(R.string.something_went_wrong_error))
         }
         Button(onClick = { onGoToHome() }) {
-            Text(text = "Return Home")
+            Text(text = stringResource(R.string.return_home_button))
         }
     }
 

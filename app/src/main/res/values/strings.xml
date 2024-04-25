@@ -15,4 +15,20 @@
     <string name="empty_password_error">Enter the password</string>
     <string name="return_button">Return</string>
     <string name="goToTableChoiceButton">Choose a table</string>
+    <string name="finalize_order_button">Finalize Order</string>
+    <string name="something_went_wrong_error">Something went wrong</string>
+    <string name="return_home_button">Return Home</string>
+    <string name="order_food_button">Order food</string>
+    <string name="my_orders_button">My Orders</string>
+    <string name="log_out_button">Log out</string>
+    <string name="table_unavailable">Table unavailable</string>
+    <string name="choose_button">Choose</string>
+    <string name="an_unavailable_table_description">an unavailable table</string>
+    <string name="an_available_table_description">an available table</string>
+    <string name="your_orders_heading">"Your Orders: "</string>
+    <string name="dishes">"Dishes: "</string>
+    <string name="table_number">"Table Number: "</string>
+    <string name="table">"Table: "</string>
+    <string name="status">"Status: "</string>
+    <string name="price">"Price: "</string>
 </resources>
