@@ -5,7 +5,9 @@ import com.example.restaurantapp.model.Infrastructure
 import com.example.restaurantapp.model.LoginParams
 import com.example.restaurantapp.model.Order
 import com.example.restaurantapp.model.ReceivedOrder
+import com.example.restaurantapp.model.ReceivedReservation
 import com.example.restaurantapp.model.RegisterParams
+import com.example.restaurantapp.model.SentReservation
 import com.example.restaurantapp.model.Table
 import com.example.restaurantapp.network.RestaurantApiService
 import okhttp3.ResponseBody
@@ -43,6 +45,14 @@ class RestaurantRepository (private val restaurantApiService: RestaurantApiServi
 
     fun cancelOrder(orderId: Int, token: String): Call<ResponseBody>{
         return restaurantApiService.cancelOrder(orderId, token)
+    }
+
+    fun makeReservation(token:String, body: SentReservation): Call<ResponseBody>{
+        return restaurantApiService.makeReservation(token, body)
+    }
+
+    suspend fun getUserReservations(token: String, userId: String): List<ReceivedReservation>{
+        return restaurantApiService.getUserReservations(userId, token)
     }
 
 }

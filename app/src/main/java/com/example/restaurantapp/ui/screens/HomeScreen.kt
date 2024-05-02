@@ -18,7 +18,9 @@ import com.example.restaurantapp.R
 @Composable
 fun HomeScreen(
     onGoToOrder : () -> Unit = {},
-    onGoToUserOrders : () -> Unit = {}
+    onGoToUserOrders : () -> Unit = {},
+    onGoToMakeReservation : () -> Unit = {},
+    onGoToMyReservations : () -> Unit = {},
 ){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -39,8 +41,11 @@ fun HomeScreen(
         Button(onClick = {onGoToUserOrders()}){
             Text(stringResource(R.string.my_orders_button))
         }
-        Button(onClick = {}){
-            Text(stringResource(R.string.log_out_button))
+        Button(onClick = {onGoToMakeReservation()}){
+            Text("Make a Reservation")
+        }
+        Button(onClick = {onGoToMyReservations()}){
+            Text("My Reservations")
         }
 
     }

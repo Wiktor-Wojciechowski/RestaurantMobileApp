@@ -1,5 +1,6 @@
 package com.example.restaurantapp.ui
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -16,6 +17,8 @@ import com.example.restaurantapp.ui.screens.FoodChoiceViewModel
 import com.example.restaurantapp.ui.screens.HomeScreen
 import com.example.restaurantapp.ui.screens.LogInScreen
 import com.example.restaurantapp.ui.screens.LoginViewModel
+import com.example.restaurantapp.ui.screens.MakeReservationScreen
+import com.example.restaurantapp.ui.screens.MakeReservationViewModel
 import com.example.restaurantapp.ui.screens.OrderViewModel
 import com.example.restaurantapp.ui.screens.RegisterScreen
 import com.example.restaurantapp.ui.screens.RegisterViewModel
@@ -23,6 +26,8 @@ import com.example.restaurantapp.ui.screens.TableChoiceScreen
 import com.example.restaurantapp.ui.screens.TableChoiceViewModel
 import com.example.restaurantapp.ui.screens.UserOrdersScreen
 import com.example.restaurantapp.ui.screens.UserOrdersViewModel
+import com.example.restaurantapp.ui.screens.UserReservationsScreen
+import com.example.restaurantapp.ui.screens.UserReservationsViewModel
 
 enum class RestaurantScreen {
     Login,
@@ -32,9 +37,12 @@ enum class RestaurantScreen {
     FoodChoice,
     TableChoice,
     FinalizeOrder,
-    UserOrders
+    UserOrders,
+    MakeReservation,
+    UserReservations
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RestaurantApp(
     navController: NavHostController = rememberNavController()
@@ -82,6 +90,12 @@ fun RestaurantApp(
                     },
                     onGoToUserOrders = {
                         navController.navigate(RestaurantScreen.UserOrders.name)
+                    },
+                    onGoToMakeReservation = {
+                        navController.navigate(RestaurantScreen.MakeReservation.name)
+                    },
+                    onGoToMyReservations = {
+                        navController.navigate(RestaurantScreen.UserReservations.name)
                     }
                 )
             }
@@ -126,6 +140,26 @@ fun RestaurantApp(
             composable(route = RestaurantScreen.UserOrders.name){
                 val viewmodel: UserOrdersViewModel = viewModel(factory = UserOrdersViewModel.Factory)
                 UserOrdersScreen(userOrdersState = viewmodel.userOrdersState, viewModel = viewmodel)
+            }
+
+            composable(route = RestaurantScreen.MakeReservation.name){
+                val viewModel: MakeReservationViewModel = viewModel(factory = MakeReservationViewModel.Factory)
+                MakeReservationScreen(
+                    onMakeReservation = {
+                        reservation ->
+                        viewModel.makeReservation(reservation)
+                    },
+                    reservationState = viewModel.reservationState,
+                    tablesState = viewModel.tablesState,
+                    infrastructureState = viewModel.infrastructureState
+                )
+            }
+
+            composable(route = RestaurantScreen.UserReservations.name){
+                val viewModel: UserReservationsViewModel = viewModel(factory = UserReservationsViewModel.Factory)
+                UserReservationsScreen(
+                    userReservationsState = viewModel.userReservationsState
+                )
             }
         }
     }

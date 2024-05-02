@@ -6,7 +6,9 @@ import com.example.restaurantapp.model.Infrastructure
 import com.example.restaurantapp.model.LoginParams
 import com.example.restaurantapp.model.Order
 import com.example.restaurantapp.model.ReceivedOrder
+import com.example.restaurantapp.model.ReceivedReservation
 import com.example.restaurantapp.model.RegisterParams
+import com.example.restaurantapp.model.SentReservation
 import com.example.restaurantapp.model.Table
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -47,4 +49,10 @@ interface RestaurantApiService {
 
     @DELETE("/api/Dish/{orderId}")
     fun cancelOrder(@Path("orderId") orderId: Int, @Header("Authorization") token:String): Call<ResponseBody>
+
+    @POST("/api/Reservation")
+    fun makeReservation(@Header("Authorization") token:String, @Body body: SentReservation): Call<ResponseBody>
+
+    @GET("/GetAllUserReservations/{userId}")
+    suspend fun getUserReservations(@Path("userId") userId: String, @Header("Authorization") token: String): List<ReceivedReservation>
 }

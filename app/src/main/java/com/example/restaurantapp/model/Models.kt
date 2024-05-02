@@ -1,5 +1,7 @@
 package com.example.restaurantapp.model
 
+import java.util.Date
+
 data class RegisterParams(
     val username: String,
     val email: String,
@@ -59,4 +61,18 @@ data class ReceivedTable(
     val gridColumn: Int,
     val orderModels: Any,
     val reservations: Any
+)
+
+data class SentReservation(
+    val from: String,
+    val to: String,
+    val identityUserId: String,
+    val tableModelId: Int
+)
+
+data class ReceivedReservation(
+    val from: String,
+    val to: String,
+    val identityUserId: String,
+    val tableModelId: Int
 )
