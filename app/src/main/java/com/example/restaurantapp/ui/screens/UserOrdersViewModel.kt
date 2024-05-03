@@ -46,33 +46,7 @@ class UserOrdersViewModel(private val repository: RestaurantRepository) : ViewMo
             }
         }
     }
-    /*
-    fun cancelOrder(orderId: Int){
-        viewModelScope.launch {
-            try {
-                var call = repository.cancelOrder(orderId, "Bearer "+AuthContext.getUser().token)
-                call.enqueue(object: Callback<ResponseBody>{
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        Log.d("order_deleteThrowable", t.message.toString())
-                    }
-                    override fun onResponse(
-                        call: Call<ResponseBody>,
-                        response: Response<ResponseBody>
-                    ) {
-                        if(!response.isSuccessful){
-                            Log.d("order_delete", "error")
-                        }else{
-                            Log.d("order_delete", "order deleted")
-                        }
-                    }
-                })
-            }catch (e:Exception){
-                Log.d("order_deleteException", e.toString())
-            }
 
-        }
-    }
-    */
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

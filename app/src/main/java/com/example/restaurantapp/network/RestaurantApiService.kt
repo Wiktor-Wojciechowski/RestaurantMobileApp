@@ -47,9 +47,6 @@ interface RestaurantApiService {
     //fun getOrders(@Path("userId") userId: String, @Header("Authorization") token: String): Call<ResponseBody>
     suspend fun getOrders(@Path("userId") userId: String, @Header("Authorization") token: String): List<ReceivedOrder>
 
-    @DELETE("/api/Dish/{orderId}")
-    fun cancelOrder(@Path("orderId") orderId: Int, @Header("Authorization") token:String): Call<ResponseBody>
-
     @POST("/api/Reservation")
     fun makeReservation(@Header("Authorization") token:String, @Body body: SentReservation): Call<ResponseBody>
 

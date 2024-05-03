@@ -43,10 +43,6 @@ class RestaurantRepository (private val restaurantApiService: RestaurantApiServi
 
     }
 
-    fun cancelOrder(orderId: Int, token: String): Call<ResponseBody>{
-        return restaurantApiService.cancelOrder(orderId, token)
-    }
-
     fun makeReservation(token:String, body: SentReservation): Call<ResponseBody>{
         return restaurantApiService.makeReservation(token, body)
     }

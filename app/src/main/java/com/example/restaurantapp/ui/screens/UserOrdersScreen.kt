@@ -25,8 +25,6 @@ import com.example.restaurantapp.R
 @Composable
 fun UserOrdersScreen(
     userOrdersState: UserOrdersState,
-    onCancelOrder: () -> Unit = {},
-    viewModel: UserOrdersViewModel
 ){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -62,14 +60,7 @@ fun UserOrdersScreen(
                             Text(stringResource(R.string.table) +order.tableModel.toString())
                             Text(stringResource(R.string.status) +order.status)
                             Text(stringResource(R.string.price) +order.price)
-                            /*
-                            if(order.status == 2){
-                                Button(onClick = { viewModel.cancelOrder(order.id) }) {
-                                    Text("Cancel Order")
-                                }
-                            }
 
-                             */
                         }
                     }
                 }

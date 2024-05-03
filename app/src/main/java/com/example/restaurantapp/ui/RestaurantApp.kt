@@ -139,7 +139,7 @@ fun RestaurantApp(
             }
             composable(route = RestaurantScreen.UserOrders.name){
                 val viewmodel: UserOrdersViewModel = viewModel(factory = UserOrdersViewModel.Factory)
-                UserOrdersScreen(userOrdersState = viewmodel.userOrdersState, viewModel = viewmodel)
+                UserOrdersScreen(userOrdersState = viewmodel.userOrdersState)
             }
 
             composable(route = RestaurantScreen.MakeReservation.name){
