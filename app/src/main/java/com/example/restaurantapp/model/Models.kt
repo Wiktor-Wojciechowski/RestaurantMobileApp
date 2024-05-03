@@ -23,6 +23,15 @@ data class Dish(
     val price: Int,
     val availability: Boolean
 )
+
+data class ReceivedDish(
+    val id: Int,
+    val name: String,
+    val description: String,
+    val price: Int,
+    val availability: Boolean,
+    val orders: Any
+)
 data class Infrastructure(
     val numberOfRows: Int,
     val numberOfColumns: Int
@@ -48,9 +57,13 @@ data class ReceivedOrder(
     val price: Int,
     val tableModelId: Int,
     val tableModel: ReceivedTable,
-    val dishModels: List<Any>,
+    val dishModels: List<ReceivedDish>,
     val identityUserId: String,
     val identityUserModel: Any
+)
+
+data class OrderStatus(
+    val status: Int
 )
 
 data class ReceivedTable(

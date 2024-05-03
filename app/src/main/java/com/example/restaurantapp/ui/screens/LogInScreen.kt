@@ -47,6 +47,10 @@ fun LogInScreen(
             isLoginError = true
             loginErrorMessage = loginState.errorMessage
         }
+        !is LoginState.Error -> {
+            isLoginError = false
+            loginErrorMessage = ""
+        }
     }
     var username by remember {mutableStateOf("")}
     var password by remember { mutableStateOf("")}
@@ -105,6 +109,9 @@ fun LogInScreen(
                 text = loginErrorMessage,
                 color = MaterialTheme.colorScheme.error
             )
+        }
+        if(loginState == LoginState.Loading){
+            Text(text = "Loading...")
         }
         Spacer(modifier = Modifier.size(8.dp))
         Button(onClick = {

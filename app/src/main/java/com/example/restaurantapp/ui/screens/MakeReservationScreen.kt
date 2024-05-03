@@ -4,15 +4,20 @@ import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
@@ -29,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -50,9 +56,16 @@ fun MakeReservationScreen(
     infrastructureState: InfrastructureState = InfrastructureState.Loading,
 ) {
     Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .widthIn(max = 350.dp)
     ) {
+        Text(
+            text ="Create a Reservation",
+            style = MaterialTheme.typography.headlineLarge,
+        )
         val datePickerState = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
         val timerState = rememberTimePickerState()
         val openTimer = remember { mutableStateOf(false)}
@@ -63,8 +76,9 @@ fun MakeReservationScreen(
         val isTableChosen = remember { mutableStateOf(false) }
         val isDateChosen = remember { mutableStateOf(true) }
         val isTimeChosen = remember { mutableStateOf(true) }
-        val isReservationError = remember { mutableStateOf(reservationState == ReservationState.Error)}
-        val isReservationNotDone = remember { mutableStateOf(reservationState != ReservationState.Success) }
+        val isReservationError = remember { mutableStateOf(false)}
+        isReservationError.value = reservationState == ReservationState.Error
+        val isReservationNotDone = remember { mutableStateOf(true) }
         isReservationNotDone.value = reservationState != ReservationState.Success
 
         var conditions = listOf(
@@ -167,9 +181,13 @@ fun MakeReservationScreen(
             Text(text = "Choose Time")
         }
         var dateTimePicked = combineDateTime(datePickerState.selectedDateMillis, timerState.hour, timerState.minute)
+        var sdf = SimpleDateFormat("HH:mm dd-MM-yyyy")
+        var formattedDate = sdf.format(Date(dateTimePicked))
         Text(
-            text = "Date and time picked: ${dateTimePicked}",
-            textAlign = TextAlign.Center
+            text = "Date and time picked: " + formattedDate,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .widthIn(max=350.dp)
         )
 
         Button(
@@ -264,13 +282,17 @@ fun TableList(
                             modifier = Modifier
                                 .padding(16.dp)
                         ) {
-                            Text(text = "Table "+table.id.toString())
-                            TextButton(
-                                onClick = { onTableChosen(table.id) },
-                                enabled = table.isAvailable
-                            ) {
-                                Text(text = "Choose")
+                            Column {
+                                Text(text = "Table "+table.id.toString())
+                                Text(text = "Seats: " + table.numberOfSeats.toString())
+                                TextButton(
+                                    onClick = { onTableChosen(table.id) },
+                                    enabled = table.isAvailable
+                                ) {
+                                    Text(text = "Choose")
+                                }
                             }
+
                         }
                     }
                 }

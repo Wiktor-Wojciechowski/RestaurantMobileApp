@@ -4,6 +4,7 @@ import com.example.restaurantapp.model.Dish
 import com.example.restaurantapp.model.Infrastructure
 import com.example.restaurantapp.model.LoginParams
 import com.example.restaurantapp.model.Order
+import com.example.restaurantapp.model.OrderStatus
 import com.example.restaurantapp.model.ReceivedOrder
 import com.example.restaurantapp.model.ReceivedReservation
 import com.example.restaurantapp.model.RegisterParams
@@ -14,11 +15,11 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 
 class RestaurantRepository (private val restaurantApiService: RestaurantApiService){
-    suspend fun registerUser(body: RegisterParams): Call<ResponseBody>{
+    fun registerUser(body: RegisterParams): Call<ResponseBody>{
         return restaurantApiService.registerUser(body)
     }
 
-    suspend fun loginUser(body: LoginParams): Call<ResponseBody>{
+    fun loginUser(body: LoginParams): Call<ResponseBody>{
         return restaurantApiService.loginUser(body)
     }
 
@@ -38,9 +39,13 @@ class RestaurantRepository (private val restaurantApiService: RestaurantApiServi
         return restaurantApiService.sendOrder(token, body)
     }
 
-    suspend fun getOrders(userId: String, token:String): List<ReceivedOrder>/*Call<ResponseBody>*/{
+    suspend fun getOrders(userId: String, token:String): List<ReceivedOrder>{
         return restaurantApiService.getOrders(userId, token)
 
+    }
+
+    fun setOrderReadyToPay(orderId: Int, token: String, body: OrderStatus): Call<ResponseBody>{
+        return restaurantApiService.setOrderReadyToPay(orderId, token, body)
     }
 
     fun makeReservation(token:String, body: SentReservation): Call<ResponseBody>{

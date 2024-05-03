@@ -76,37 +76,49 @@ fun FoodChoiceScreen(
                             .widthIn(max = 350.dp)
 
                         ) {
-                        Text(
-                            dish.name,
+                        Column(
                             modifier = Modifier
-                                .padding(8.dp)
-                        )
-                        Text(dish.description)
-                        Text(dish.availability.toString())
-                        Text(dish.price.toString())
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ){
-                            var amount: String by remember{mutableStateOf(viewModel.cart.count{it == dish.id}.toString())}
-                            Button(onClick = {
-                                viewModel.removeDishFromCart(dish.id)
-                                amount = viewModel.cart.count{it == dish.id}.toString()
-                                Log.d("cart:", viewModel.cart.toString())
-                            }) {
-                                Text(text = "-")
-                            }
+                                .padding(8.dp),
+                        ) {
                             Text(
-                                modifier = Modifier.padding(16.dp),
-                                text = amount
+                                dish.name,
+                                modifier = Modifier
+                                    .padding(8.dp)
                             )
-                            Button(onClick = {
-                                viewModel.addDishToCart(dish.id)
-                                amount = viewModel.cart.count{it == dish.id}.toString()
-                                Log.d("cart:", viewModel.cart.toString())
-                            }) {
-                                Text(text = "+")
+                            Text(dish.description)
+                            Text("Available: " + if(dish.availability) "Yes" else "No")
+                            Text("Price: " + dish.price.toString())
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ){
+                                var amount: String by remember{mutableStateOf(viewModel.cart.count{it == dish.id}.toString())}
+                                Button(
+                                    onClick = {
+                                        viewModel.removeDishFromCart(dish.id)
+                                        amount = viewModel.cart.count{it == dish.id}.toString()
+                                        Log.d("cart:", viewModel.cart.toString())
+                                    },
+                                    enabled = dish.availability
+                                ) {
+                                    Text(text = "-")
+                                }
+                                Text(
+                                    modifier = Modifier.padding(16.dp),
+                                    text = amount
+                                )
+                                Button(
+                                    onClick = {
+                                        viewModel.addDishToCart(dish.id)
+                                        amount = viewModel.cart.count{it == dish.id}.toString()
+                                        Log.d("cart:", viewModel.cart.toString())
+                                    },
+                                    enabled = dish.availability
+                                ) {
+                                    Text(text = "+")
+                                }
                             }
                         }
+
                     }
 
                 }

@@ -30,11 +30,12 @@ interface LoginState {
 
 }
 class LoginViewModel(val repository: RestaurantRepository): ViewModel() {
-    var loginState: LoginState by mutableStateOf(LoginState.Loading)
+    var loginState: LoginState by mutableStateOf(LoginState.Init)
         private set
     fun loginUser(params: LoginParams){
         viewModelScope.launch {
             try {
+                loginState = LoginState.Loading
                 var call = repository.loginUser(params)
                 call.enqueue(object: Callback<ResponseBody>{
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

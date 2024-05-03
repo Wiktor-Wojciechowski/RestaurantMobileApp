@@ -25,6 +25,7 @@ import com.example.restaurantapp.R
 @Composable
 fun UserOrdersScreen(
     userOrdersState: UserOrdersState,
+    onSetReadyToPay: (orderId: Int) -> Unit = {}
 ){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -55,12 +56,21 @@ fun UserOrdersScreen(
                                 .widthIn(max = 350.dp)
 
                         ){
-                            Text(stringResource(R.string.dishes) +order.dishModels.toString())
+                            Text(stringResource(R.string.dishes))
+                            order.dishModels.forEach { dish ->
+                                Text(text = dish.name)
+                            }
                             Text(stringResource(R.string.table_number) +order.tableModelId)
-                            Text(stringResource(R.string.table) +order.tableModel.toString())
                             Text(stringResource(R.string.status) +order.status)
                             Text(stringResource(R.string.price) +order.price)
-
+                            Button(
+                                onClick = {
+                                    onSetReadyToPay(order.id)
+                                },
+                                enabled = order.status == 1
+                            ) {
+                                Text(text = "Ready to Pay")
+                            }
                         }
                     }
                 }

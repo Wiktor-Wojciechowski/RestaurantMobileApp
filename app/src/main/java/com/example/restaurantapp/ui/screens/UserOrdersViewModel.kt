@@ -46,6 +46,15 @@ class UserOrdersViewModel(private val repository: RestaurantRepository) : ViewMo
             }
         }
     }
+    fun setOrderReadyToPay(){
+        viewModelScope.launch {
+            try {
+
+            }catch (e:Exception){
+                Log.d("SetOrderRTPException", e.toString())
+            }
+        }
+    }
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
