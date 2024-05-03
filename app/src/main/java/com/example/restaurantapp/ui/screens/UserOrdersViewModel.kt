@@ -13,6 +13,7 @@ import com.example.restaurantapp.RestaurantApplication
 import com.example.restaurantapp.data.AuthContext
 import com.example.restaurantapp.data.RestaurantRepository
 import com.example.restaurantapp.model.Order
+import com.example.restaurantapp.model.OrderStatus
 import com.example.restaurantapp.model.ReceivedOrder
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
@@ -46,10 +47,27 @@ class UserOrdersViewModel(private val repository: RestaurantRepository) : ViewMo
             }
         }
     }
-    fun setOrderReadyToPay(){
+    fun setOrderReadyToPay(orderId: Int){
         viewModelScope.launch {
             try {
+                var call = repository.setOrderReadyToPay(orderId = orderId, token = "Bearer " + AuthContext.getUser().token)
+                call.enqueue(object: Callback<ResponseBody>{
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        Log.d("setorderfailure", t.toString())
+                    }
+                    override fun onResponse(
+                        call: Call<ResponseBody>,
+                        response: Response<ResponseBody>
+                    ) {
+                        if(!response.isSuccessful) {
+                            Log.d("setorderresponsefailure", response.message())
+                        }else {
+                            getOrders()
+                            Log.d("order rtp", "success")
+                        }
+                    }
 
+                })
             }catch (e:Exception){
                 Log.d("SetOrderRTPException", e.toString())
             }

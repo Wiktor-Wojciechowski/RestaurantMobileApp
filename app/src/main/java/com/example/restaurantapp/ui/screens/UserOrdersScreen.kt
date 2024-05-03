@@ -21,6 +21,7 @@ import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.restaurantapp.R
+import com.example.restaurantapp.model.ReceivedOrder
 
 @Composable
 fun UserOrdersScreen(
@@ -60,8 +61,15 @@ fun UserOrdersScreen(
                             order.dishModels.forEach { dish ->
                                 Text(text = dish.name)
                             }
+                            var orderStatusMessage = ""
+                            when (order.status){
+                                1 -> orderStatusMessage = "Ready"
+                                2 -> orderStatusMessage = "Being Prepared"
+                                3 -> orderStatusMessage = "Ready to Pay"
+                                4 -> orderStatusMessage = "Paid"
+                            }
                             Text(stringResource(R.string.table_number) +order.tableModelId)
-                            Text(stringResource(R.string.status) +order.status)
+                            Text(stringResource(R.string.status) + orderStatusMessage)
                             Text(stringResource(R.string.price) +order.price)
                             Button(
                                 onClick = {

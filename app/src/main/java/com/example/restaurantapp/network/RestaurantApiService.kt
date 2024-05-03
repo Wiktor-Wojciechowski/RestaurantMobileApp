@@ -45,8 +45,8 @@ interface RestaurantApiService {
     @POST("api/order")
     fun sendOrder(@Header("Authorization") token: String, @Body body: Order): Call<ResponseBody>
 
-    @PUT("api/order/{orderId}")
-    fun setOrderReadyToPay(@Path("orderId") orderId:Int, @Header("Authorization") token: String, @Body body: OrderStatus): Call<ResponseBody>
+    @PUT("ChangeStatus_ReadyToPay/{orderId}")
+    fun setOrderReadyToPay(@Path("orderId") orderId:Int, @Header("Authorization") token: String): Call<ResponseBody>
 
     @GET("GetAllUserOrders/{userId}")
     suspend fun getOrders(@Path("userId") userId: String, @Header("Authorization") token: String): List<ReceivedOrder>

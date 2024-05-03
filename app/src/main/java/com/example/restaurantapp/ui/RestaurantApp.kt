@@ -143,7 +143,7 @@ fun RestaurantApp(
                     userOrdersState = viewmodel.userOrdersState,
                     onSetReadyToPay = {
                         orderId ->
-                            viewmodel.setOrderReadyToPay()
+                            viewmodel.setOrderReadyToPay(orderId)
                     }
                 )
             }

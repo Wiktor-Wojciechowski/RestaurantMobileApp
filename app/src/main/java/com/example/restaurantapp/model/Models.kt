@@ -53,7 +53,7 @@ data class Order(
 
 data class ReceivedOrder(
     val id: Int,
-    val status: Int,
+    var status: Int,
     val price: Int,
     val tableModelId: Int,
     val tableModel: ReceivedTable,

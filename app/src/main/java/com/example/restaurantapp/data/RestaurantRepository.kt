@@ -44,8 +44,8 @@ class RestaurantRepository (private val restaurantApiService: RestaurantApiServi
 
     }
 
-    fun setOrderReadyToPay(orderId: Int, token: String, body: OrderStatus): Call<ResponseBody>{
-        return restaurantApiService.setOrderReadyToPay(orderId, token, body)
+    fun setOrderReadyToPay(orderId: Int, token: String): Call<ResponseBody>{
+        return restaurantApiService.setOrderReadyToPay(orderId, token)
     }
 
     fun makeReservation(token:String, body: SentReservation): Call<ResponseBody>{
