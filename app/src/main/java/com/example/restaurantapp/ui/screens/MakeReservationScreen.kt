@@ -1,15 +1,12 @@
 package com.example.restaurantapp.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -33,11 +30,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.example.restaurantapp.R
 import com.example.restaurantapp.data.AuthContext
 import com.example.restaurantapp.model.Infrastructure
 import com.example.restaurantapp.model.SentReservation
@@ -63,7 +61,7 @@ fun MakeReservationScreen(
             .widthIn(max = 350.dp)
     ) {
         Text(
-            text ="Create a Reservation",
+            text = stringResource(R.string.create_a_reservation_heading),
             style = MaterialTheme.typography.headlineLarge,
         )
         val datePickerState = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
@@ -109,12 +107,12 @@ fun MakeReservationScreen(
                 Card {
                     Column {
                         when (infrastructureState){
-                            is InfrastructureState.Loading -> Text(text = "Loading infrastructure")
-                            is InfrastructureState.Error -> Text(text = "Error")
+                            is InfrastructureState.Loading -> Text(text = stringResource(R.string.loading_infrastructure))
+                            is InfrastructureState.Error -> Text(text = stringResource(R.string.error))
                             is InfrastructureState.receivedInfrastructure ->
                                 when (tablesState){
-                                    is TablesState.Loading -> Text(text = "Loading tables")
-                                    is TablesState.Error -> Text(text = "Error")
+                                    is TablesState.Loading -> Text(text = stringResource(R.string.loading_tables))
+                                    is TablesState.Error -> Text(text = stringResource(R.string.error))
                                     is TablesState.receivedTables ->
                                         TableList(
                                             infrastructure = infrastructureState.infrastructure,
@@ -134,9 +132,10 @@ fun MakeReservationScreen(
             }
         }
         Button(onClick = { openTableChoice.value = true }) {
-            Text(text = "Choose Table")
+            Text(text = stringResource(R.string.choose_table_button))
         }
-        Text(text = "Chosen Table: " + if(chosenTable.value < 0) "None" else chosenTable.value.toString())
+        Text(text = stringResource(R.string.chosen_table) +
+                if(chosenTable.value < 0) stringResource(R.string.chosen_table_none) else chosenTable.value.toString())
 
         if(openDatePicker.value){
             Dialog(
@@ -154,10 +153,10 @@ fun MakeReservationScreen(
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         Button(onClick = { openDatePicker.value = false }) {
-                            Text("Confirm")
+                            Text(stringResource(R.string.confirm_button))
                         }
                         Button(onClick = { openDatePicker.value = false }) {
-                            Text("Cancel")
+                            Text(stringResource(R.string.cancel_button))
                         }
                     }
 
@@ -167,7 +166,7 @@ fun MakeReservationScreen(
         }
 
         Button(onClick = { openDatePicker.value = true }) {
-            Text(text = "Choose Date")
+            Text(text = stringResource(R.string.choose_date_button))
         }
 
         if (openTimer.value){
@@ -178,13 +177,13 @@ fun MakeReservationScreen(
             )
         }
         Button(onClick = { openTimer.value = true }) {
-            Text(text = "Choose Time")
+            Text(text = stringResource(R.string.choose_time_button))
         }
         var dateTimePicked = combineDateTime(datePickerState.selectedDateMillis, timerState.hour, timerState.minute)
         var sdf = SimpleDateFormat("HH:mm dd-MM-yyyy")
         var formattedDate = sdf.format(Date(dateTimePicked))
         Text(
-            text = "Date and time picked: " + formattedDate,
+            text = stringResource(R.string.date_and_time_picked) + formattedDate,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .widthIn(max=350.dp)
@@ -196,20 +195,19 @@ fun MakeReservationScreen(
                 val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 sdf.timeZone = TimeZone.getTimeZone("GMT+2")
                 val formattedDate = sdf.format(Date(dateTimePicked))
-                Log.d("date time", formattedDate.toString())
 
                 onMakeReservation(SentReservation(formattedDate, formattedDate, AuthContext.getUser().id, chosenTable.value))
             },
             enabled = reservationEnabled
         ) {
-            Text(text = "Make a Reservation")
+            Text(text = stringResource(R.string.make_a_reservation_button))
         }
         if(!isReservationNotDone.value){
-            Text(text = "Reservation created!")
+            Text(text = stringResource(R.string.reservation_created))
 
         }
         if(isReservationError.value){
-            Text(text = "Error")
+            Text(text = stringResource(R.string.error))
         }
     }
 }
@@ -239,10 +237,10 @@ fun TimerDialog(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Button(onClick = { onConfirmation() }) {
-                    Text(text = "Confirm")
+                    Text(text = stringResource(R.string.confirm_button))
                 }
                 Button(onClick = { onDismissRequest() }) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(R.string.cancel_button))
                 }
             }
         }
@@ -274,7 +272,7 @@ fun TableList(
     var rows = infrastructure.numberOfRows
     var columns = infrastructure.numberOfColumns
     repeat(rows){rowIndex ->
-        Row(){
+        Row {
             repeat(columns){ columnIndex ->
                 for (table in tables) {
                     if(rowIndex == table.gridRow && columnIndex == table.gridColumn){
@@ -283,13 +281,13 @@ fun TableList(
                                 .padding(16.dp)
                         ) {
                             Column {
-                                Text(text = "Table "+table.id.toString())
-                                Text(text = "Seats: " + table.numberOfSeats.toString())
+                                Text(text = stringResource(R.string.table)+table.id.toString())
+                                Text(text = stringResource(R.string.seats) + table.numberOfSeats.toString())
                                 TextButton(
                                     onClick = { onTableChosen(table.id) },
                                     enabled = table.isAvailable
                                 ) {
-                                    Text(text = "Choose")
+                                    Text(text = stringResource(R.string.choose_button))
                                 }
                             }
 

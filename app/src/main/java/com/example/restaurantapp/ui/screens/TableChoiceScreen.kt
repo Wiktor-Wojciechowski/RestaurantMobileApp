@@ -1,6 +1,5 @@
 package com.example.restaurantapp.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
@@ -50,7 +49,7 @@ fun TableChoiceScreen(
                             var columns = infrastructureState.infrastructure.numberOfColumns
                             var tables = tablesState.tables
                             repeat(rows){rowIndex ->
-                                Row(){
+                                Row {
                                     repeat(columns){ columnIndex ->
                                         for (table in tables) {
                                             if(rowIndex == table.gridRow && columnIndex == table.gridColumn){
@@ -81,7 +80,7 @@ fun TableSpot(
     onTableChosen: () -> Unit = {},
     orderViewModel: OrderViewModel
 ){
-    Card(){
+    Card {
         Box{
             if(table.isAvailable){
                 Image(painter = painterResource(id = R.drawable.available_table),
@@ -99,7 +98,6 @@ fun TableSpot(
             onClick = {
                 viewModel.chosenTableId = table.id
                 orderViewModel.setTable(table)
-                Log.d("chosenTable:", table.id.toString())
                 onTableChosen()
                 },
             enabled = table.isAvailable

@@ -15,9 +15,9 @@ class DefaultAppContainer: AppContainer{
 
     fun createRetrofit(): Retrofit {
 
-        var interceptor = HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        var client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build();
+        var interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        var client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
         return Retrofit
             .Builder()

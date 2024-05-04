@@ -1,6 +1,5 @@
 package com.example.restaurantapp.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -60,7 +59,7 @@ fun FoodChoiceScreen(
             .widthIn(max = 350.dp)
     ) {
         Text(
-            text ="Choose Your Dishes",
+            text = stringResource(R.string.choose_your_dishes_heading),
             style = MaterialTheme.typography.headlineLarge,
         )
 
@@ -88,8 +87,10 @@ fun FoodChoiceScreen(
                                 fontSize = 20.sp
                             )
                             Text(dish.description)
-                            Text("Available: " + if(dish.availability) "Yes" else "No")
-                            Text("Price: " + dish.price.toString())
+                            Text(stringResource(R.string.dish_available) +
+                                    if(dish.availability) stringResource(R.string.yes) else stringResource(R.string.no)
+                            )
+                            Text(stringResource(R.string.dish_price) + dish.price.toString())
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center,
@@ -101,7 +102,6 @@ fun FoodChoiceScreen(
                                     onClick = {
                                         viewModel.removeDishFromCart(dish.id)
                                         amount = viewModel.cart.count{it == dish.id}.toString()
-                                        Log.d("cart:", viewModel.cart.toString())
                                     },
                                     enabled = dish.availability
                                 ) {
@@ -115,7 +115,6 @@ fun FoodChoiceScreen(
                                     onClick = {
                                         viewModel.addDishToCart(dish.id)
                                         amount = viewModel.cart.count{it == dish.id}.toString()
-                                        Log.d("cart:", viewModel.cart.toString())
                                     },
                                     enabled = dish.availability
                                 ) {

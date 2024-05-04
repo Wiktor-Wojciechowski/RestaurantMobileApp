@@ -29,7 +29,7 @@ fun HomeScreen(
             .widthIn(max = 350.dp)
     ){
         Text(
-            text = "Welcome to the Restaurant!",
+            text = stringResource(R.string.welcome_to_the_restaurant_heading),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .padding(10.dp, 0.dp, 10.dp, 100.dp),
@@ -42,10 +42,10 @@ fun HomeScreen(
             Text(stringResource(R.string.my_orders_button))
         }
         Button(onClick = {onGoToMakeReservation()}){
-            Text("Make a Reservation")
+            Text(stringResource(R.string.make_a_reservation_button))
         }
         Button(onClick = {onGoToMyReservations()}){
-            Text("My Reservations")
+            Text(stringResource(R.string.my_reservations_button))
         }
 
     }

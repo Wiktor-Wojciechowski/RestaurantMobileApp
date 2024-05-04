@@ -20,10 +20,10 @@ fun FinalizeOrderScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ){
-        Column(){
+        Column {
             orderViewModel.getCart()
         }
-        Card(){
+        Card {
             orderViewModel.getTable().toString()
         }
         Button(

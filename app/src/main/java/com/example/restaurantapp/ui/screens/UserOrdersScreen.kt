@@ -18,11 +18,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role.Companion.Button
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.restaurantapp.R
-import com.example.restaurantapp.model.ReceivedOrder
 
 @Composable
 fun UserOrdersScreen(
@@ -68,10 +65,14 @@ fun UserOrdersScreen(
                                 }
                                 var orderStatusMessage = ""
                                 when (order.status){
-                                    1 -> orderStatusMessage = "Ready"
-                                    2 -> orderStatusMessage = "Being Prepared"
-                                    3 -> orderStatusMessage = "Ready to Pay"
-                                    4 -> orderStatusMessage = "Paid"
+                                    1 -> orderStatusMessage =
+                                        stringResource(R.string.order_status_ready)
+                                    2 -> orderStatusMessage =
+                                        stringResource(R.string.order_status_being_prepared)
+                                    3 -> orderStatusMessage =
+                                        stringResource(R.string.order_status_ready_to_pay)
+                                    4 -> orderStatusMessage =
+                                        stringResource(R.string.order_status_paid)
                                 }
                                 Text(stringResource(R.string.table_number) +order.tableModelId)
                                 Text(stringResource(R.string.status) + orderStatusMessage)
@@ -87,7 +88,7 @@ fun UserOrdersScreen(
                                         },
                                         enabled = order.status == 1
                                     ) {
-                                        Text(text = "Ready to Pay")
+                                        Text(text = stringResource(R.string.ready_to_pay_button))
                                     }
                                 }
 

@@ -111,7 +111,7 @@ fun LogInScreen(
             )
         }
         if(loginState == LoginState.Loading){
-            Text(text = "Loading...")
+            Text(text = stringResource(R.string.loading_ellipsis))
         }
         Spacer(modifier = Modifier.size(8.dp))
         Button(onClick = {
