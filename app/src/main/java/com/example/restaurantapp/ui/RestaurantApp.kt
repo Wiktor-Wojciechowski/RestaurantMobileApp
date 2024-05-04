@@ -134,7 +134,13 @@ fun RestaurantApp(
                 }
 
                 composable(route = RestaurantScreen.FinalizeOrder.name){
-                    FinalizeOrderScreen(orderState = orderViewModel.orderState, orderViewModel = orderViewModel)
+                    FinalizeOrderScreen(
+                        orderState = orderViewModel.orderState,
+                        orderViewModel = orderViewModel,
+                        onGoToHome = {
+                            navController.navigate(RestaurantScreen.Home.name)
+                        }
+                    )
                 }
             }
             composable(route = RestaurantScreen.UserOrders.name){

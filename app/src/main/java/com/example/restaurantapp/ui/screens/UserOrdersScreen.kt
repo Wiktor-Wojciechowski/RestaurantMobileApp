@@ -2,6 +2,7 @@ package com.example.restaurantapp.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -57,27 +58,39 @@ fun UserOrdersScreen(
                                 .widthIn(max = 350.dp)
 
                         ){
-                            Text(stringResource(R.string.dishes))
-                            order.dishModels.forEach { dish ->
-                                Text(text = dish.name)
-                            }
-                            var orderStatusMessage = ""
-                            when (order.status){
-                                1 -> orderStatusMessage = "Ready"
-                                2 -> orderStatusMessage = "Being Prepared"
-                                3 -> orderStatusMessage = "Ready to Pay"
-                                4 -> orderStatusMessage = "Paid"
-                            }
-                            Text(stringResource(R.string.table_number) +order.tableModelId)
-                            Text(stringResource(R.string.status) + orderStatusMessage)
-                            Text(stringResource(R.string.price) +order.price)
-                            Button(
-                                onClick = {
-                                    onSetReadyToPay(order.id)
-                                },
-                                enabled = order.status == 1
+                            Column(
+                                modifier = Modifier
+                                    .padding(8.dp)
                             ) {
-                                Text(text = "Ready to Pay")
+                                Text(stringResource(R.string.dishes))
+                                order.dishModels.forEach { dish ->
+                                    Text(text = dish.name)
+                                }
+                                var orderStatusMessage = ""
+                                when (order.status){
+                                    1 -> orderStatusMessage = "Ready"
+                                    2 -> orderStatusMessage = "Being Prepared"
+                                    3 -> orderStatusMessage = "Ready to Pay"
+                                    4 -> orderStatusMessage = "Paid"
+                                }
+                                Text(stringResource(R.string.table_number) +order.tableModelId)
+                                Text(stringResource(R.string.status) + orderStatusMessage)
+                                Text(stringResource(R.string.price) +order.price)
+                                Row(
+                                    horizontalArrangement = Arrangement.Center,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                ) {
+                                    Button(
+                                        onClick = {
+                                            onSetReadyToPay(order.id)
+                                        },
+                                        enabled = order.status == 1
+                                    ) {
+                                        Text(text = "Ready to Pay")
+                                    }
+                                }
+
                             }
                         }
                     }

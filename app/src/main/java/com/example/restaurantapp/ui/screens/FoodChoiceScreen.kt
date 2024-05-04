@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.restaurantapp.R
 import com.example.restaurantapp.model.Dish
 
@@ -83,13 +84,17 @@ fun FoodChoiceScreen(
                             Text(
                                 dish.name,
                                 modifier = Modifier
-                                    .padding(8.dp)
+                                    .padding(8.dp),
+                                fontSize = 20.sp
                             )
                             Text(dish.description)
                             Text("Available: " + if(dish.availability) "Yes" else "No")
                             Text("Price: " + dish.price.toString())
                             Row(
-                                verticalAlignment = Alignment.CenterVertically
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
                             ){
                                 var amount: String by remember{mutableStateOf(viewModel.cart.count{it == dish.id}.toString())}
                                 Button(

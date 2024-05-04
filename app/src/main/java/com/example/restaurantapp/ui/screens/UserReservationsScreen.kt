@@ -1,5 +1,6 @@
 package com.example.restaurantapp.ui.screens
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -31,9 +32,15 @@ fun UserReservationsScreen(
                             modifier = Modifier
                                 .padding(8.dp)
                         ) {
-                            Text(text = "From: " + reservation.from.toString())
-                            Text(text = "To: " + reservation.to.toString())
-                            Text(text = "Reserved Table Number: " + reservation.tableModelId.toString())
+                            Column(
+                                modifier = Modifier
+                                    .padding(8.dp)
+                            ) {
+                                Text(text = "From: " + reservation.from.toString())
+                                Text(text = "To: " + reservation.to.toString())
+                                Text(text = "Reserved Table Number: " + reservation.tableModelId.toString())
+                            }
+
                         }
                     }
 
