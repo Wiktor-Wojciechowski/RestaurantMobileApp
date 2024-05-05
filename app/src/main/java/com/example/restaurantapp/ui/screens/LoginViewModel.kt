@@ -56,15 +56,15 @@ class LoginViewModel(val repository: RestaurantRepository): ViewModel() {
 
                         }else{
                             var jsonString = response.body()?.string()
-                            if (!jsonString.isNullOrEmpty()) {
+                            if (jsonString.isNullOrEmpty()) {
+                                loginState = LoginState.Error("Response body is empty")
+                            } else {
                                 val json = JSONObject(jsonString)
                                 val token = json.getString("token")
                                 val id = json.getString("userId")
                                 Log.d("responseS", token)
                                 AuthContext.setUser(User(id, token))
                                 loginState = LoginState.Success
-                            } else {
-                                loginState = LoginState.Error("Response body is empty")
                             }
                         }
                     }
@@ -72,6 +72,7 @@ class LoginViewModel(val repository: RestaurantRepository): ViewModel() {
                 })
             } catch(e:Exception){
                 Log.d("LoginError", e.message.toString())
+                loginState = LoginState.Error(e.message.toString())
             }
         }
     }
