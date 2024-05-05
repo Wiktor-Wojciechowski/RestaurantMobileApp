@@ -46,6 +46,20 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+        resources.excludes.addAll(
+            listOf(
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md",
+                // other conflicting META-INF bits
+            )
+        )
+    }
+    testOptions {
+        packagingOptions {
+            jniLibs {
+                useLegacyPackaging = true
+            }
+        }
     }
 }
 
@@ -64,6 +78,8 @@ dependencies {
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
     // Feature module Support
     implementation ("androidx.navigation:navigation-dynamic-features-fragment:2.7.7")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     // Testing Navigation
     androidTestImplementation ("androidx.navigation:navigation-testing:2.7.7")
     // Jetpack Compose Integration
@@ -76,6 +92,13 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.11.0")
     //DataStore
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
+
+    //Tests
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1-Beta")
+
+    androidTestImplementation ("io.mockk:mockk-android:1.13.2")
+    androidTestImplementation ("io.mockk:mockk-agent:1.13.2")
+    androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1-Beta")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -90,6 +113,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }

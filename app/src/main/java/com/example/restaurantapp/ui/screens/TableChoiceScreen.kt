@@ -5,6 +5,9 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -15,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.example.restaurantapp.R
 import com.example.restaurantapp.model.Table
 
@@ -51,6 +55,7 @@ fun TableChoiceScreen(
                             repeat(rows){rowIndex ->
                                 Row {
                                     repeat(columns){ columnIndex ->
+                                        var tableFound = false
                                         for (table in tables) {
                                             if(rowIndex == table.gridRow && columnIndex == table.gridColumn){
                                                 TableSpot(
@@ -59,9 +64,17 @@ fun TableChoiceScreen(
                                                     onTableChosen = {onTableChosen()},
                                                     orderViewModel = orderViewModel
                                                 )
+                                                tableFound = true
                                             }
                                         }
+                                        if (!tableFound){
+                                            Box(
+                                                modifier = Modifier
+                                                    .size(150.dp)
+                                            ) {
 
+                                            }
+                                        }
                                     }
                                 }
 
@@ -83,15 +96,18 @@ fun TableSpot(
     Card {
         Box{
             if(table.isAvailable){
-                Image(painter = painterResource(id = R.drawable.available_table),
-                    stringResource(R.string.an_available_table_description))
+                Image(
+                    painter = painterResource(id = R.drawable.available_table),
+                    modifier = Modifier
+                        .size(150.dp),
+                    contentDescription = stringResource(R.string.an_available_table_description))
 
             }else{
                 Image(painter = painterResource(id = R.drawable.unavailable_table),
                     stringResource(R.string.an_unavailable_table_description))
             }
         }
-
+        Text("Table :" + table.id)
         Text("Number of seats: ${table.numberOfSeats}")
         if (!table.isAvailable) Text(stringResource(R.string.table_unavailable))
         Button(
