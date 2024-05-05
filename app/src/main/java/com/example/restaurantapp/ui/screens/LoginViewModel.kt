@@ -56,13 +56,16 @@ class LoginViewModel(val repository: RestaurantRepository): ViewModel() {
 
                         }else{
                             var jsonString = response.body()?.string()
-                            val json = JSONObject(jsonString)
-                            val token = json.getString("token")
-                            val id = json.getString("userId")
-                            Log.d("responseS", token)
-                            AuthContext.setUser(User(id,token))
-
-                            loginState = LoginState.Success
+                            if (!jsonString.isNullOrEmpty()) {
+                                val json = JSONObject(jsonString)
+                                val token = json.getString("token")
+                                val id = json.getString("userId")
+                                Log.d("responseS", token)
+                                AuthContext.setUser(User(id, token))
+                                loginState = LoginState.Success
+                            } else {
+                                loginState = LoginState.Error("Response body is empty")
+                            }
                         }
                     }
 
