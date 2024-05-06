@@ -170,7 +170,11 @@ fun RestaurantApp(
             composable(route = RestaurantScreen.UserReservations.name){
                 val viewModel: UserReservationsViewModel = viewModel(factory = UserReservationsViewModel.Factory)
                 UserReservationsScreen(
-                    userReservationsState = viewModel.userReservationsState
+                    userReservationsState = viewModel.userReservationsState,
+                    onDeleteReservation = {
+                        reservationId ->
+                            viewModel.deleteReservation(reservationId)
+                    }
                 )
             }
         }

@@ -56,4 +56,8 @@ class RestaurantRepository (private val restaurantApiService: RestaurantApiServi
         return restaurantApiService.getUserReservations(userId, token)
     }
 
+    fun deleteReservation(reservationId: Int, token: String): Call<ResponseBody>{
+        return restaurantApiService.deleteReservation(reservationId, token)
+    }
+
 }

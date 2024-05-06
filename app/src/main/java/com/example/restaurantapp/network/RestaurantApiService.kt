@@ -56,4 +56,7 @@ interface RestaurantApiService {
 
     @GET("/GetAllUserReservations/{userId}")
     suspend fun getUserReservations(@Path("userId") userId: String, @Header("Authorization") token: String): List<ReceivedReservation>
+
+    @DELETE("/ReservationDelete-User/{reservationId}")
+    fun deleteReservation(@Path("reservationId") reservationId: Int, @Header("Authorization") token: String): Call<ResponseBody>
 }

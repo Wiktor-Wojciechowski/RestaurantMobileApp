@@ -1,9 +1,14 @@
 package com.example.restaurantapp.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,7 +21,8 @@ import com.example.restaurantapp.R
 
 @Composable
 fun UserReservationsScreen(
-    userReservationsState: UserReservationsState
+    userReservationsState: UserReservationsState,
+    onDeleteReservation: (reservationId: Int) -> Unit = {}
 ){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -40,10 +46,22 @@ fun UserReservationsScreen(
                             Column(
                                 modifier = Modifier
                                     .padding(8.dp)
+                                    .widthIn(max = 350.dp)
+
                             ) {
                                 Text(text = stringResource(R.string.reservation_from) + reservation.from.toString())
                                 Text(text = stringResource(R.string.reservation_to) + reservation.to.toString())
                                 Text(text = stringResource(R.string.reservation_table) + reservation.tableModelId.toString())
+                                Row(
+                                    horizontalArrangement = Arrangement.Center,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                ){
+                                    Button(onClick = { onDeleteReservation(reservation.id) }) {
+                                        Text(text = "Delete reservation")
+                                    }
+                                }
+
                             }
 
                         }

@@ -14,6 +14,10 @@ import com.example.restaurantapp.data.AuthContext
 import com.example.restaurantapp.data.RestaurantRepository
 import com.example.restaurantapp.model.ReceivedReservation
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 interface UserReservationsState {
     object Error: UserReservationsState
@@ -38,6 +42,32 @@ class UserReservationsViewModel(val repository: RestaurantRepository): ViewModel
             }catch (e:Exception){
                 userReservationsState = UserReservationsState.Error
                 Log.d("getuserreservationsException", e.toString())
+            }
+        }
+    }
+
+    fun deleteReservation(reservationId: Int){
+        viewModelScope.launch {
+            try {
+                var call = repository.deleteReservation(reservationId, "Bearer " + AuthContext.getUser().token)
+                call.enqueue(object: Callback<ResponseBody> {
+                    override fun onResponse(
+                        call: Call<ResponseBody>,
+                        response: Response<ResponseBody>
+                    ) {
+                        if (!response.isSuccessful) {
+                            Log.d("deleteReservationError", response.message())
+                        }else {
+                            getUserReservations()
+                        }
+                    }
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        Log.d("deleteReservationFailure", t.message.toString())
+                    }
+
+                })
+            }catch (e:Exception){
+                Log.d("deleteReservationException", e.toString())
             }
         }
     }
