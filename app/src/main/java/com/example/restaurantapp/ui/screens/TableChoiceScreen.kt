@@ -104,7 +104,9 @@ fun TableSpot(
 
             }else{
                 Image(painter = painterResource(id = R.drawable.unavailable_table),
-                    stringResource(R.string.an_unavailable_table_description))
+                    modifier = Modifier
+                        .size(150.dp),
+                    contentDescription =stringResource(R.string.an_unavailable_table_description))
             }
         }
         Text("Table :" + table.id)
@@ -115,7 +117,7 @@ fun TableSpot(
                 viewModel.chosenTableId = table.id
                 orderViewModel.setTable(table)
                 onTableChosen()
-                },
+            },
             enabled = table.isAvailable
         ){
             Text(stringResource(R.string.choose_button))

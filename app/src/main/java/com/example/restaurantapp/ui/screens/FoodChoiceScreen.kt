@@ -51,6 +51,7 @@ fun FoodChoiceScreen(
     viewModel: FoodChoiceViewModel,
     orderViewModel: OrderViewModel
 ) {
+    var isCartEmpty by remember {mutableStateOf(true)}
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -102,6 +103,7 @@ fun FoodChoiceScreen(
                                     onClick = {
                                         viewModel.removeDishFromCart(dish.id)
                                         amount = viewModel.cart.count{it == dish.id}.toString()
+                                        isCartEmpty = viewModel.cart.isEmpty()
                                     },
                                     enabled = dish.availability
                                 ) {
@@ -115,6 +117,7 @@ fun FoodChoiceScreen(
                                     onClick = {
                                         viewModel.addDishToCart(dish.id)
                                         amount = viewModel.cart.count{it == dish.id}.toString()
+                                        isCartEmpty = viewModel.cart.isEmpty()
                                     },
                                     enabled = dish.availability
                                 ) {
@@ -129,10 +132,13 @@ fun FoodChoiceScreen(
             }
         }
 
-        Button(onClick = {
-            orderViewModel.setCart(viewModel.cart)
-            onGoToTableChoice()
-        }) {
+        Button(
+            onClick = {
+                orderViewModel.setCart(viewModel.cart)
+                onGoToTableChoice()
+            },
+            enabled = !isCartEmpty
+        ) {
             Text(text = stringResource(R.string.goToTableChoiceButton))
         }
 
