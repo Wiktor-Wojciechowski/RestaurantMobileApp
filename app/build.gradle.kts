@@ -101,6 +101,7 @@ dependencies {
 
     androidTestImplementation ("io.mockk:mockk-android:1.13.2")
     androidTestImplementation ("io.mockk:mockk-agent:1.13.2")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.1.0")
     androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1-Beta")
 
     implementation("androidx.core:core-ktx:1.12.0")

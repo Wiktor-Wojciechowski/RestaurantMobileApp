@@ -2,22 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="MakeReservationViewModelTest">
+      <entry key="LogInScreenTest">
+        <State />
+      </entry>
+      <entry key="RegisterScreenTest">
+        <State />
+      </entry>
+      <entry key="UserReservationsViewModelTest">
         <State />
       </entry>
       <entry key="app">
         <State />
       </entry>
-      <entry key="makeReservation_UpdatesReservationState()">
+      <entry key="logInScreen_UsernameAndPasswordFilled_LoginButtonClicked()">
         <State />
       </entry>
-      <entry key="sendOrder_UpdatesOrderState()">
-        <State />
-      </entry>
-      <entry key="testSuccessfulRegister()">
-        <State />
-      </entry>
-      <entry key="useAppContext()">
+      <entry key="registerScreen_RegistrationStateError_ErrorDisplayed()">
         <State />
       </entry>
     </value>
