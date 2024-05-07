@@ -2,19 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="LoginViewModelTest">
+      <entry key="MakeReservationViewModelTest">
         <State />
       </entry>
       <entry key="app">
         <State />
       </entry>
-      <entry key="logintest()">
+      <entry key="makeReservation_UpdatesReservationState()">
         <State />
       </entry>
-      <entry key="testSuccessfulLogin()">
+      <entry key="sendOrder_UpdatesOrderState()">
         <State />
       </entry>
-      <entry key="testSuccessfulLogin() (1)">
+      <entry key="testSuccessfulRegister()">
+        <State />
+      </entry>
+      <entry key="useAppContext()">
         <State />
       </entry>
     </value>

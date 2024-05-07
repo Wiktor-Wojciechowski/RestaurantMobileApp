@@ -79,7 +79,8 @@ fun RestaurantApp(
                     onRegister = {
                         params: RegisterParams ->
                             viewModel.registerUser(params)
-                    }
+                    },
+                    registrationState = viewModel.registrationState
                 )
             }
 

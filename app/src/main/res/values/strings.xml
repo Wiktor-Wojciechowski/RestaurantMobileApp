@@ -63,4 +63,6 @@
     <string name="date_and_time_picked">"Date and time picked: "</string>
     <string name="reservation_created">Reservation created!</string>
     <string name="seats">"Seats: "</string>
+    <string name="enter_the_email_error">Enter the email</string>
+    <string name="enter_the_age_error">Enter the age</string>
 </resources>

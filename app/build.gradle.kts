@@ -80,6 +80,9 @@ dependencies {
     implementation ("androidx.navigation:navigation-dynamic-features-fragment:2.7.7")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     // Testing Navigation
     androidTestImplementation ("androidx.navigation:navigation-testing:2.7.7")
     // Jetpack Compose Integration
