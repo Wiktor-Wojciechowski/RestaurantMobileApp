@@ -25,8 +25,10 @@ class MakeReservationScreenTest {
         }
 
         composeTestRule.onNodeWithText("Choose Table").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Choose Date").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Choose Time").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Choose Date From").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Choose Time From").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Choose Date To").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Choose Time To").assertIsDisplayed()
         composeTestRule.onNodeWithText("Make a Reservation").assertIsDisplayed()
     }
 

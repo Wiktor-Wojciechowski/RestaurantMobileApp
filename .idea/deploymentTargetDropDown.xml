@@ -2,10 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="HomeScreenTest">
-        <State />
-      </entry>
-      <entry key="TableChoiceScreenTest">
+      <entry key="MakeReservationScreenTest">
         <State />
       </entry>
       <entry key="UserOrdersScreenTest">
@@ -15,6 +12,9 @@
         <State />
       </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="makeReservationScreen_Displayed_Correctly()">
         <State />
       </entry>
       <entry key="userReservationsScreen_DeleteReservationButtonClicked()">
