@@ -18,7 +18,7 @@
     <string name="finalize_order_button">Finalize Order</string>
     <string name="something_went_wrong_error">Something went wrong</string>
     <string name="return_home_button">Return Home</string>
-    <string name="order_food_button">Order food</string>
+    <string name="order_food_button">Order Food</string>
     <string name="my_orders_button">My Orders</string>
     <string name="log_out_button">Log out</string>
     <string name="table_unavailable">Table unavailable</string>

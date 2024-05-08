@@ -27,7 +27,7 @@ fun TableChoiceScreen(
     tablesState: TablesState = TablesState.Loading,
     infrastructureState: InfrastructureState = InfrastructureState.Loading,
     viewModel: TableChoiceViewModel,
-    onTableChosen: () -> Unit,
+    onTableChosen: () -> Unit = {},
     orderViewModel: OrderViewModel
 ) {
     when (infrastructureState) {

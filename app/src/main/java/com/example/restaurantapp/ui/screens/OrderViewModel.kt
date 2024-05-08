@@ -27,7 +27,7 @@ interface OrderState {
 }
 
 class OrderViewModel(private val repository: RestaurantRepository): ViewModel(){
-    private lateinit var cart: List<Int>
+    private var cart: List<Int> = mutableListOf()
     private var chosenTable: Table? = null
     var orderState: OrderState by mutableStateOf(OrderState.Loading)
         private set
