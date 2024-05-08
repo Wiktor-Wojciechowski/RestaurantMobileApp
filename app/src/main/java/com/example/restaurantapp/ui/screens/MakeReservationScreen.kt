@@ -44,6 +44,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
+import kotlin.time.Duration.Companion.milliseconds
 
 @ExperimentalMaterial3Api
 @Composable
@@ -64,10 +65,14 @@ fun MakeReservationScreen(
             text = stringResource(R.string.create_a_reservation_heading),
             style = MaterialTheme.typography.headlineLarge,
         )
-        val datePickerState = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
-        val timerState = rememberTimePickerState()
-        val openTimer = remember { mutableStateOf(false)}
-        val openDatePicker = remember { mutableStateOf(false)}
+        val datePickerStateFrom = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
+        val datePickerStateTo = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
+        val timerStateFrom = rememberTimePickerState()
+        val timerStateTo = rememberTimePickerState()
+        val openTimerFrom = remember { mutableStateOf(false)}
+        val openTimerTo = remember { mutableStateOf(false)}
+        val openDatePickerFrom = remember { mutableStateOf(false)}
+        val openDatePickerTo = remember { mutableStateOf(false)}
         val openTableChoice = remember { mutableStateOf(false)}
         val chosenTable = remember { mutableIntStateOf(-1) }
 
@@ -137,25 +142,25 @@ fun MakeReservationScreen(
         Text(text = stringResource(R.string.chosen_table) +
                 if(chosenTable.value < 0) stringResource(R.string.chosen_table_none) else chosenTable.value.toString())
 
-        if(openDatePicker.value){
+        if(openDatePickerFrom.value){
             Dialog(
-                onDismissRequest = { openDatePicker.value = false },
+                onDismissRequest = { openDatePickerFrom.value = false },
                 properties = DialogProperties(usePlatformDefaultWidth = false)
             ) {
                 Card(
                     modifier = Modifier
                         .widthIn(max = 350.dp)
                 ) {
-                    DatePicker(state = datePickerState)
+                    DatePicker(state = datePickerStateFrom)
                     Row(
                         modifier = Modifier
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        Button(onClick = { openDatePicker.value = false }) {
+                        Button(onClick = { openDatePickerFrom.value = false }) {
                             Text(stringResource(R.string.confirm_button))
                         }
-                        Button(onClick = { openDatePicker.value = false }) {
+                        Button(onClick = { openDatePickerFrom.value = false }) {
                             Text(stringResource(R.string.cancel_button))
                         }
                     }
@@ -165,25 +170,78 @@ fun MakeReservationScreen(
             }
         }
 
-        Button(onClick = { openDatePicker.value = true }) {
-            Text(text = stringResource(R.string.choose_date_button))
+        Button(onClick = { openDatePickerFrom.value = true }) {
+            Text(text = "Choose Date From")
+        }
+        if(openDatePickerTo.value){
+            Dialog(
+                onDismissRequest = { openDatePickerTo.value = false },
+                properties = DialogProperties(usePlatformDefaultWidth = false)
+            ) {
+                Card(
+                    modifier = Modifier
+                        .widthIn(max = 350.dp)
+                ) {
+                    DatePicker(state = datePickerStateTo)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Button(onClick = { openDatePickerTo.value = false }) {
+                            Text(stringResource(R.string.confirm_button))
+                        }
+                        Button(onClick = { openDatePickerTo.value = false }) {
+                            Text(stringResource(R.string.cancel_button))
+                        }
+                    }
+
+                }
+
+            }
         }
 
-        if (openTimer.value){
+        if (openTimerFrom.value){
             TimerDialog(
-                onDismissRequest = { openTimer.value = false },
-                onConfirmation = { openTimer.value = false },
-                timerState = timerState,
+                onDismissRequest = { openTimerFrom.value = false },
+                onConfirmation = { openTimerFrom.value = false },
+                timerState = timerStateFrom,
             )
         }
-        Button(onClick = { openTimer.value = true }) {
-            Text(text = stringResource(R.string.choose_time_button))
+        Button(onClick = { openTimerFrom.value = true }) {
+            Text(text = "Choose Time From")
         }
-        var dateTimePicked = combineDateTime(datePickerState.selectedDateMillis, timerState.hour, timerState.minute)
+
+        Button(onClick = { openDatePickerTo.value = true }) {
+            Text(text = "Choose Date To")
+        }
+
+        if (openTimerTo.value){
+            TimerDialog(
+                onDismissRequest = { openTimerTo.value = false },
+                onConfirmation = { openTimerTo.value = false },
+                timerState = timerStateTo,
+            )
+        }
+        Button(onClick = { openTimerTo.value = true }) {
+            Text(text = "Choose Time To")
+        }
+
+        var dateTimePickedFrom = combineDateTime(datePickerStateFrom.selectedDateMillis, timerStateFrom.hour, timerStateFrom.minute)
+        var dateTimePickedTo = combineDateTime(datePickerStateTo.selectedDateMillis, timerStateTo.hour, timerStateTo.minute)
+
         var sdf = SimpleDateFormat("HH:mm dd-MM-yyyy")
-        var formattedDate = sdf.format(Date(dateTimePicked))
+        var formattedDateFrom = sdf.format(Date(dateTimePickedFrom))
+        var formattedDateTo = sdf.format(Date(dateTimePickedTo))
+
         Text(
-            text = stringResource(R.string.date_and_time_picked) + formattedDate,
+            text = "Date and time picked from: " + formattedDateFrom,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .widthIn(max=350.dp)
+        )
+        Text(
+            text = "Date and time picked to: " + formattedDateTo,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .widthIn(max=350.dp)
@@ -191,14 +249,18 @@ fun MakeReservationScreen(
 
         Button(
             onClick = {
-                dateTimePicked = combineDateTime(datePickerState.selectedDateMillis, timerState.hour, timerState.minute)
+                dateTimePickedFrom = combineDateTime(datePickerStateFrom.selectedDateMillis, timerStateFrom.hour, timerStateFrom.minute)
+                dateTimePickedTo = combineDateTime(datePickerStateFrom.selectedDateMillis, timerStateTo.hour, timerStateTo.minute)
+
                 val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 sdf.timeZone = TimeZone.getTimeZone("GMT+2")
-                val formattedDate = sdf.format(Date(dateTimePicked))
 
-                onMakeReservation(SentReservation(formattedDate, formattedDate, AuthContext.getUser().id, chosenTable.value))
+                val formattedDateFrom = sdf.format(Date(dateTimePickedFrom))
+                val formattedDateTo = sdf.format(Date(dateTimePickedTo))
+
+                onMakeReservation(SentReservation(formattedDateFrom, formattedDateTo, AuthContext.getUser().id, chosenTable.value))
             },
-            enabled = reservationEnabled
+            enabled = reservationEnabled && dateTimePickedFrom < dateTimePickedTo
         ) {
             Text(text = stringResource(R.string.make_a_reservation_button))
         }
